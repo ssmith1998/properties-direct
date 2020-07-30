@@ -41,9 +41,15 @@ header{
                 margin: 0px 10px 0px 10px;
                 color: #ffffff;
                 font-size: 22px;
-                
+                &:hover{
+                    cursor: pointer;
+                }
                 padding-bottom: 19px;
 
+                a{
+                    color: white;
+                    text-decoration: none;
+                }
                 i{
                     font-size: 22px;
                 }

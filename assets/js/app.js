@@ -12,5 +12,34 @@ import '../css/app.scss';
 import $ from 'jquery';
 
 $(document).ready(function () {
-    console.log('ready');
+
+    $('.mainMenu ul li').on("click", function () {
+        $('.mainMenu ul li').removeClass('activeMenuItem');
+        $(this).addClass('activeMenuItem');
+        var menuItem = $(this).attr('id');
+        console.log(menuItem);
+        localStorage.setItem('pageName', menuItem);
+
+
+    })
+
+
+    $('.mainMenu ul li').each(function () {
+        var pageName = localStorage.getItem('pageName');
+
+        console.log(pageName);
+
+        if (pageName === $(this).attr('id')) {
+            $('.mainMenu ul li').removeClass('activeMenuItem');
+            $(this).addClass('activeMenuItem');
+        } else {
+
+            return;
+
+
+        }
+    })
+
+
+
 })
