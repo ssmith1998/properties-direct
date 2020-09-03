@@ -3,8 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\Property;
+use App\Entity\PropertyAddress;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\Migrations\Query\Query;
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 /**
  * @method Property|null find($id, $lockMode = null, $lockVersion = null)

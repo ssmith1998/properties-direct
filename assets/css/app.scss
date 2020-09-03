@@ -58,6 +58,92 @@ header{
 
         }
     }
+
+  
 }
+
+#heroImage{
+    background-image: url('../../public/images/background-hero.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .formWrapper{
+        background: rgba(0, 0, 0, 0.5);
+ 
+        color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 67vw;    }
+}
+.propertyWrapper{
+    position: relative;
+    p{
+        position: absolute;
+        color: #ffffff;
+        margin: 0px;
+
+        &:first-of-type{
+            bottom: 0px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            font-size: 30px;
+        }
+
+
+        &:nth-last-of-type(1){
+            bottom: 0px;
+            right: 0px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            font-size: 30px;
+        }
+    }
+
+  
+}
+.slick-prev, .slick-next{
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+
+    i{
+        font-size: 50px;
+    }
+    
+}
+.slick-next{
+    right: 5px;
+}
+
+.slick-prev{
+    left: 5px;
+}
+
+
+#map{
+    height: 400px;
+}
+
+.propertyPhotoSlider
+{
+    height: 399px;
+
+    .slick-list
+    {
+        height: 399px;
+    }
+}
+
+
+.tabInfo2{
+    display: none;
+
+}
+
+
 
 

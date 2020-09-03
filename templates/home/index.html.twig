@@ -3,8 +3,35 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-<section id="heroImageSlider">
-hello
+<section id="heroImage">
+
+<div class="formWrapper">
+<div class="container">
+
+{{ form_start(form) }}
+   
+<div class="row">
+<div class="col-md-12">
+   {{ form_row(form.propertyAddress) }}
+</div>
+
+ 
+</div>
+<div class="row">
+<div class="col-md-6">
+    {{ form_row(form.listDate) }}
+</div>
+<div class="col-md-6">
+    {{ form_row(form.yearBuilt) }}
+</div>
+</div>
+   
+
+
+    {# {{ form_row(form.submit, { 'label': 'Submit me' }) }} #}
+{{ form_end(form) }}
+</div>
+</div>
 
 </section>
 {% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Results{% endblock %}
+
+{% block body %}
+
+<div class="container">
+{% for _property in result  %}
+
+{% set property = _property[0] %}
+<a href="/property/profile/{{property.getId()}}">
+<div class="propertyWrapper [ my-2 ]">
+
+ <p>{{property.getNeighborHoodName()}}</p>
+<p>{{property.getLine()}}</p> 
+<img class="w-100" src="{{ _property["Link"] }}" alt="">
+</div>
+</a>
+{% endfor %}
+</div>
+
+
+{% endblock %}

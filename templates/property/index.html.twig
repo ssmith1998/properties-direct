@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{property.getPropertyAddress().getNeighborhoodName()}}{% endblock %}
+
+{% block body %}
+
+  <h1 class="text-center py-3">{{property.getPropertyAddress().getNeighborhoodName()}}</h1>
+  <div class="container">
+
+<div class="row">
+<div class="col-md-6 py-2 px-4 py-lg-0 px-md-2">
+
+  {# property images start #}
+   <div class="propertyPhotoSlider">
+  {% for propertyPhoto in property.getPropertyPhotos()  %}
+ <div class="photoWrapper">
+      <img class="img-fluid" src="{{propertyPhoto.getPhotoLink()}}" alt="">
+ </div>
+   
+
+  {% endfor %}
+  </div>
+</div>
+  {# property images end #}
+<div class="col-md-6 px-4 px-lg-2">
+
+  {# property map/location #}
+    <div id="map" data-long={{property.getPropertyAddress().getLongitude()}} data-lat={{property.getPropertyAddress().getLatitude()}}>
+
+    </div>
+  {# property map/location end  #}
+
+
+</div>
+
+<div class="col-12 px-2 pt-2">
+<div class="card px-5">
+<div class="tabs w-100 d-flex">
+<button class="btn btn-primary flex-grow-1 mr-2 tab1 tab">Information</button>
+<button class="btn btn-outline-primary flex-grow-1 tab2 tab">Book</button>
+</div>
+<div class="tabInfo1">
+<h3 class="pl-2">{{property.getPropertyAddress().getLine()}}</h3>
+<h5 class="pl-2">{{property.getPropertyAddress().getNeighborhoodName()}}</h5>
+<h5 class="pl-2">{{property.getPropertyAddress().getCity()}}</h5>
+</div>
+<div class="tabInfo2">
+<h3>Book now</h3>
+
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+{% endblock %}

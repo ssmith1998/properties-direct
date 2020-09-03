@@ -3,6 +3,9 @@
 namespace App\Command;
 
 use App\Entity\Property;
+use App\Entity\PropertyAddress;
+use App\Entity\PropertyCommunity;
+use App\Entity\PropertyPhoto;
 use App\Repository\PropertyRepository;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use DateTime;
@@ -35,9 +38,9 @@ class ImportCommand extends Command
     public function __construct(EntityManagerInterface $em, PropertyRepository $propertyRepository)
     {
         parent::__construct();
-
+        //Entity Manager
         $this->em = $em;
-
+        // property repo used to insert property info
         $this->propertyRepo = $propertyRepository;
     }
     // function executes command
@@ -50,7 +53,7 @@ class ImportCommand extends Command
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://realtor.p.rapidapi.com/properties/v2/list-for-rent?sort=relevance&city=New%20York%20City&state_code=NY&limit=50&offset=0",
+            CURLOPT_URL => "https://realtor.p.rapidapi.com/properties/v2/list-for-rent?sort=relevance&city=New%20York%20City&state_code=NY&limit=250&offset=0",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_ENCODING => "",
@@ -77,7 +80,7 @@ class ImportCommand extends Command
 
             $data = json_decode($response, true);
 
-            // dump($data);
+            // dump($data['properties']);
             // die();
 
             // loop over data and insert
@@ -87,17 +90,116 @@ class ImportCommand extends Command
             ]);
 
             foreach ($data['properties'] as $propertyData) {
-                $property = (new Property())
-                    ->setPropertyId($propertyData['property_id'])
-                    ->setListingId($propertyData['listing_id'])
-                    ->setPropertyType($propertyData['prop_type'])
-                    ->setListDate(new \DateTime($propertyData['list_date']))
-                    ->setLastUpdate(new \DateTime($propertyData['last_update']))
-                    ->setYearBuilt(new \DateTime($propertyData['year_built']))
-                    ->setListingStatus($propertyData['listing_status'])
-                    ->setNoOfbeds($propertyData['beds'])
-                    ->setWebsiteUrl($propertyData['rdc_web_url']);
 
+                // print_r($propertyData['address']);
+                if (array_key_exists('year_built', $propertyData) && array_key_exists('list_date', $propertyData)) {
+
+
+                    $property = (new Property())
+                        ->setPropertyId($propertyData['property_id'])
+                        ->setListingId($propertyData['listing_id'])
+                        ->setPropertyType($propertyData['prop_type'])
+                        ->setListDate(new \DateTime($propertyData['list_date']))
+                        ->setLastUpdate(new \DateTime($propertyData['last_update']))
+                        ->setYearBuilt(new \DateTime($propertyData['year_built']))
+                        ->setListingStatus($propertyData['listing_status'])
+                        ->setNoOfbeds($propertyData['beds'])
+                        ->setWebsiteUrl($propertyData['rdc_web_url']);
+                } else {
+                    $property = (new Property())
+                        ->setPropertyId($propertyData['property_id'])
+                        ->setListingId($propertyData['listing_id'])
+                        ->setPropertyType($propertyData['prop_type'])
+                        ->setLastUpdate(new \DateTime($propertyData['last_update']))
+                        ->setListingStatus($propertyData['listing_status'])
+                        ->setNoOfbeds($propertyData['beds'])
+                        ->setWebsiteUrl($propertyData['rdc_web_url']);
+                }
+
+
+
+
+                $output->writeln([
+                    'Looping over PropertyAddress data...'
+
+                ]);
+
+
+
+                // dump($propertyData['address']);
+                // die();
+
+                if (array_key_exists('neighborhood_name', $propertyData['address']) && array_key_exists('county', $propertyData['address'])) {
+
+                    $propertyAddress = (new PropertyAddress())
+
+                        ->setCity($propertyData['address']['city'])
+                        ->setCountry($propertyData['address']['country'])
+                        ->setCounty($propertyData['address']['county'])
+                        ->setLatitude($propertyData['address']['lat'])
+                        ->setLine($propertyData['address']['line'])
+                        ->setPostCode($propertyData['address']['postal_code'])
+                        ->setStateCode($propertyData['address']['state_code'])
+                        ->setState($propertyData['address']['state'])
+                        ->setTimeZone($propertyData['address']['time_zone'])
+                        ->setNeighborHoodName($propertyData['address']['neighborhood_name'] == null ? 'null' : $propertyData['address']['neighborhood_name'])
+                        ->setLongitude($propertyData['address']['lon']);
+
+                    $property->setPropertyAddress($propertyAddress);
+                } else {
+                    $propertyAddress = (new PropertyAddress())
+
+                        ->setCity($propertyData['address']['city'])
+                        ->setCountry($propertyData['address']['country'])
+                        ->setLatitude($propertyData['address']['lat'])
+                        ->setLine($propertyData['address']['line'])
+                        ->setPostCode($propertyData['address']['postal_code'])
+                        ->setStateCode($propertyData['address']['state_code'])
+                        ->setState($propertyData['address']['state'])
+                        ->setTimeZone($propertyData['address']['time_zone'])
+                        ->setLongitude($propertyData['address']['lon']);
+
+                    $property->setPropertyAddress($propertyAddress);
+                }
+
+                $output->writeln([
+                    'Looping over PropertyCommunity data...'
+
+                ]);
+
+                // dump($propertyData['community']);
+                // die();
+
+                $propertyCommunity = (new PropertyCommunity())
+                    ->setBathsMax($propertyData['community']['baths_max'])
+                    ->setBathsMin($propertyData['community']['baths_min'])
+                    ->setBedsMax($propertyData['community']['beds_max'])
+                    ->setBedsMin($propertyData['community']['beds_min'])
+                    ->setCommunityId($propertyData['community']['id'])
+                    ->setCommunityName($propertyData['community']['name'])
+                    ->setPriceMax($propertyData['community']['price_max'])
+                    ->setPriceMin($propertyData['community']['price_min']);
+
+                $property->setPropertyCommunity($propertyCommunity);
+
+
+                $output->writeln([
+                    'Looping over PropertyPhotos data...'
+
+                ]);
+
+                // dump($propertyData['photos']['href']);
+                // die();
+
+
+                foreach ($propertyData['photos'] as $propertyDataPhotos) {
+
+
+                    $propertyPhoto = (new PropertyPhoto())
+                        ->setPhotoLink($propertyDataPhotos['href']);
+
+                    $property->addPropertyPhoto($propertyPhoto);
+                }
 
                 $this->propertyRepo->insert($property);
             }

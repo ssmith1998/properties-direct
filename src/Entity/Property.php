@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PropertyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,7 +35,7 @@ class Property
     private $propertyType;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $listDate;
 
@@ -43,7 +45,7 @@ class Property
     private $lastUpdate;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $yearBuilt;
 
@@ -61,6 +63,26 @@ class Property
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $websiteUrl;
+
+    /**
+     * @ORM\OneToOne(targetEntity=PropertyAddress::class, mappedBy="property", cascade={"persist"})
+     */
+    private $propertyAddress;
+
+    /**
+     * @ORM\OneToOne(targetEntity=PropertyCommunity::class, mappedBy="Property", cascade={"persist", "remove"})
+     */
+    private $propertyCommunity;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PropertyPhoto::class, mappedBy="property", cascade={"persist"})
+     */
+    private $propertyPhotos;
+
+    public function __construct()
+    {
+        $this->propertyPhotos = new ArrayCollection();
+    }
 
     /**
      * @return integer|null
@@ -134,7 +156,7 @@ class Property
         return $this;
     }
 
-    public function getYearBuilt(): ?\DateTimeInterface
+    public function getYearBuilt(): ?\DateTime
     {
         return $this->yearBuilt;
     }
@@ -180,5 +202,77 @@ class Property
         $this->websiteUrl = $websiteUrl;
 
         return $this;
+    }
+
+    public function getPropertyAddress(): ?PropertyAddress
+    {
+        return $this->propertyAddress;
+    }
+
+    public function setPropertyAddress(PropertyAddress $propertyAddress): self
+    {
+        $this->propertyAddress = $propertyAddress;
+
+        // set the owning side of the relation if necessary
+        if ($propertyAddress->getProperty() !== $this) {
+            $propertyAddress->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function getPropertyCommunity(): ?PropertyCommunity
+    {
+        return $this->propertyCommunity;
+    }
+
+    public function setPropertyCommunity(PropertyCommunity $propertyCommunity): self
+    {
+        $this->propertyCommunity = $propertyCommunity;
+
+        // set the owning side of the relation if necessary
+        if ($propertyCommunity->getProperty() !== $this) {
+            $propertyCommunity->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PropertyPhoto[]
+     */
+    public function getPropertyPhotos(): Collection
+    {
+        return $this->propertyPhotos;
+    }
+
+    public function addPropertyPhoto(PropertyPhoto $propertyPhoto): self
+    {
+        if (!$this->propertyPhotos->contains($propertyPhoto)) {
+            $this->propertyPhotos[] = $propertyPhoto;
+            $propertyPhoto->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removePropertyPhoto(PropertyPhoto $propertyPhoto): self
+    {
+        if ($this->propertyPhotos->contains($propertyPhoto)) {
+            $this->propertyPhotos->removeElement($propertyPhoto);
+            // set the owning side to null (unless already changed)
+            if ($propertyPhoto->getProperty() === $this) {
+                $propertyPhoto->setProperty(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function toString()
+    {
+        $date =  $this->yearBuilt;
+
+        $date->format('Y-m-d H:i:s');
     }
 }
