@@ -13,9 +13,11 @@ import '../css/slick.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
 
-import '../js/slick'
+import '../js/slick';
+
 
 $(document).ready(function () {
+
 
     // property Photos Slider
 
@@ -100,6 +102,8 @@ $(document).ready(function () {
 
 
     })
+
+    // $('.js-datepicker').datepicker();
 
 
 })

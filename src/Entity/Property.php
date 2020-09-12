@@ -79,9 +79,15 @@ class Property
      */
     private $propertyPhotos;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="property")
+     */
+    private $bookings;
+
     public function __construct()
     {
         $this->propertyPhotos = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     /**
@@ -274,5 +280,36 @@ class Property
         $date =  $this->yearBuilt;
 
         $date->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->contains($booking)) {
+            $this->bookings->removeElement($booking);
+            // set the owning side to null (unless already changed)
+            if ($booking->getProperty() === $this) {
+                $booking->setProperty(null);
+            }
+        }
+
+        return $this;
     }
 }

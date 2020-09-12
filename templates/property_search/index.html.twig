@@ -4,7 +4,47 @@
 
 {% block body %}
 
+<div class=" d-flex ">
+<div class=" bg-dark py-3 filters">
+{{ form_start(form) }}
+   
+<div class="row">
+<h3 class="text-center w-100 text-white">Filters</h3>
+<div class="col-12">
+{{ form_row(form.bathsMax) }}
+</div>
+<div class="col-12">
+{{ form_row(form.bathsMin) }}
+</div>
+<div class="col-12">
+{{ form_row(form.bedsMax) }}
+</div>
+<div class="col-12">
+{{ form_row(form.sort) }}
+</div>
+<div class="col-12">
+{{ form_row(form.priceMax) }}
+
+
+</div>
+
+<div class="col-12">
+{{ form_row(form.submit) }}
+
+
+</div>
+
+</div>
+   
+
+
+    {# {{ form_row(form.submit, { 'label': 'Submit me' }) }} #}
+{{ form_end(form) }}
+</div>
+
+<div class="content">
 <div class="container">
+
 {% for _property in result  %}
 
 {% set property = _property[0] %}
@@ -13,10 +53,12 @@
 
  <p>{{property.getNeighborHoodName()}}</p>
 <p>{{property.getLine()}}</p> 
-<img class="w-100" src="{{ _property["Link"] }}" alt="">
+<img class="w-100 text-center" src="{{ _property["Link"] }}" alt="">
 </div>
 </a>
 {% endfor %}
+</div>
+</div>
 </div>
 
 

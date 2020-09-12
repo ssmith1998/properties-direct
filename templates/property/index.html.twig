@@ -39,14 +39,41 @@
 <button class="btn btn-primary flex-grow-1 mr-2 tab1 tab">Information</button>
 <button class="btn btn-outline-primary flex-grow-1 tab2 tab">Book</button>
 </div>
-<div class="tabInfo1">
+<div class="tabInfo1 p-2">
 <h3 class="pl-2">{{property.getPropertyAddress().getLine()}}</h3>
 <h5 class="pl-2">{{property.getPropertyAddress().getNeighborhoodName()}}</h5>
 <h5 class="pl-2">{{property.getPropertyAddress().getCity()}}</h5>
 </div>
-<div class="tabInfo2">
-<h3>Book now</h3>
+<div class="tabInfo2 p-2">
+{% if app.user %}
 
+<h3 class="text-center">Book Viewing</h3>
+<div class="row">
+{{ form_start(form) }}
+<div class="col-md-12">
+<div class="form-group">
+
+   {{ form_label(form.dateOfViewing) }}
+   {{ form_widget(form.dateOfViewing) }}
+   </div>
+</div>
+<div class="col-md-12">
+<div class="form-group">
+{{ form_label(form.timeOfViewing) }}
+   {{ form_widget(form.timeOfViewing) }}
+</div>
+   
+</div>
+<div class="col-md-12">
+   {{ form_widget(form.submit) }}
+</div>
+{{ form_end(form) }}
+</div>
+{% else %}
+
+<p class="alert alert-danger text-center">Please Login before booking   <a href="/login">Login</a></p>
+
+{% endif %}
 </div>
 </div>
 
