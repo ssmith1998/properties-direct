@@ -25,7 +25,7 @@ class PropertyAddressRepository extends ServiceEntityRepository
 
 
 
-    public function searchProp($propertyAddress, $yearBuilt, $listDate, $bathsMax, $bathsMin, $bedsMax, $sort,  $priceMax)
+    public function searchProp($propertyAddress, $yearBuilt, $listDate, $bathsMax, $bedsMax, $sort,  $priceMax)
     {
 
         $ListDate = new \DateTime($listDate->format("d-m-Y") . " 00:00:00");
@@ -69,10 +69,7 @@ class PropertyAddressRepository extends ServiceEntityRepository
         }
 
 
-        if (!empty($bathsMin)) {
-            $qb->andWhere('pc.bathsMin >= :bathsMin')
-                ->setParameter('bathsMin', $bathsMin);
-        }
+
         if (!empty($bedsMax)) {
 
             $qb->andWhere('pc.bedsMax <= :bedsMax')

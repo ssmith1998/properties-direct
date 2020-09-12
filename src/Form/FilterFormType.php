@@ -33,17 +33,7 @@ class FilterFormType extends AbstractType
                 ]
 
             ])
-            ->add('bathsMin', ChoiceType::class, [
-                'required' => false,
-                'placeholder' => 'Select Baths Min',
-                'choices' => [
-                    '2' => 2,
-                    '1' => 1,
-                ],
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+
             ->add('bedsMax', ChoiceType::class, [
                 'required' => false,
                 'placeholder' => 'Select Beds Max',
