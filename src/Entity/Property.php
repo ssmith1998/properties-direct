@@ -252,6 +252,11 @@ class Property
         return $this->propertyPhotos;
     }
 
+    public function getPropertyPhoto(): PropertyPhoto
+    {
+        return $this->propertyPhotos->first();
+    }
+
     public function addPropertyPhoto(PropertyPhoto $propertyPhoto): self
     {
         if (!$this->propertyPhotos->contains($propertyPhoto)) {

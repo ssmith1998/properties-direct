@@ -14,6 +14,10 @@ use App\Repository\PropertyAddressRepository;
 use App\Repository\PropertyRepository;
 use DateTime;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 class PropertySearchController extends AbstractController
 {
@@ -66,21 +70,129 @@ class PropertySearchController extends AbstractController
 
     /**
      * 
-     * @Route("/property/search/all", name="propertySearchAll")
+     * @Route("/property/search/all/{page}", name="propertySearchAll")
      *
      * @return Response
      */
-    public function searchAllProperties(Request $request): Response
+    public function searchAllProperties(Request $request, PropertyRepository $propertyRepository, $page = 1): Response
     {
-        $propertyRepo = $this->getDoctrine()->getRepository(PropertyRepository::class);
+
+        // get query params
+        $submittedFilters = $request->query->get(('form'));
+
+        $form = $this->createFormBuilder()
+            ->setMethod('GET')
+            ->add('bathsMax', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Select Baths Max',
+                'choices' => [
+                    '5' => 5,
+                    '4' => 4,
+                    '3' => 3,
+                    '2' => 2,
+                    '1' => 1,
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+
+                'data' => $submittedFilters['bathsMax']
+
+            ])
+
+            ->add('bedsMax', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Select Beds Max',
+                'choices' => [
+                    '6' => 6,
+                    '5' => 5,
+                    '4' => 4,
+                    '3' => 3,
+                    '2' => 2,
+                    '1' => 1,
+                ],
+
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+
+                'data' => $submittedFilters['bedsMax']
+            ])
+            ->add('sort', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Sort',
+                'choices' => [
+                    'Lowest - highest' => 'lowest',
+                    'highest - lowest'  => 'highest'
+
+                ],
+
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+
+                'data' => $submittedFilters['sort']
+            ])
+            ->add('priceMax', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Select Price Max',
+                "choices" => [
+                    " Up to £2000" => 2000,
+                    "Up to £5000" => 5000,
+                    "Up to £10000" => 10000,
+                ],
+                'attr' => [
+                    'class' => 'form-control w-100'
+                ],
+
+                'data' => $submittedFilters['priceMax']
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Filter',
+                'attr' => [
+                    'class' => 'btn btn-primary w-100'
+                ]
+            ])
+            ->getForm();
 
 
-        $properties =  $propertyRepo->findAll();
+        $limit = 10;
+
+        $offset = ($page - 1)  * $limit;
+
+        $properties = $propertyRepository->findAllProperties($submittedFilters['bathsMax'], $submittedFilters['bedsMax'], $submittedFilters['sort'], $submittedFilters['priceMax'], $offset);
+        $propertiesCount = $propertyRepository->countAllProperties($submittedFilters['bathsMax'], $submittedFilters['bedsMax'], $submittedFilters['sort'], $submittedFilters['priceMax']);
+
+        $pages = ceil($propertiesCount / $limit);
 
 
-        return $this->render('property_search/index.html.twig', [
+
+
+
+
+
+
+        $start = $offset + 1;
+        $end = min(($offset + $limit), $propertiesCount);
+
+        $prevlink = $page > 1 ? '<a href="?page=1" title="First page">&laquo;</a> <a href="?page=' . ($page - 1) . '" title="Previous page">&lsaquo;</a>' : '<span class="disabled">&laquo;</span> <span class="disabled">&lsaquo;</span>';
+        $nextlink = $page < $pages ? '<a href="?page=' . ($page + 1) . '" title="Next page">&rsaquo;</a> <a href="?page=' . $pages . '" title="Last page">&raquo;</a>' : '<span class="disabled">&rsaquo;</span> <span class="disabled">&raquo;</span>';
+
+        $pagination =  '<div id="paging"><p>' . $prevlink . ' Page ' . $page . ' of ' . $pages . ' pages, displaying ' . $start . '-' . $end . ' of ' . $propertiesCount . ' results ' . $nextlink . ' </p></div>';
+
+
+        return $this->render('property_search/search-all.html.twig', [
             'properties' => $properties,
-            // 'form' => $form->createView()
+            'form' => $form->createView(),
+            'pagination' => $pagination,
+            'page' => $page,
+            'prevlink' => $prevlink,
+            'nextlink' => $nextlink,
+            'pages' => $pages,
+            'start' => $start,
+            'end' => $end,
+            'propertiesCount' => $propertiesCount
+
 
         ]);
     }

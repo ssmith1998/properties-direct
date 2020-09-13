@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-
         <link rel="stylesheet" type="text/css" href="{{ asset ('build/app.css') }}">
         <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@400&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -25,7 +24,7 @@
     <ul class="d-flex">
     <li id="home"><a href="{{path('home')}}">Home</a></li>
     <li id="about">About</li>
-    <li id="properties">Properties</li>
+    <li id="properties"><a href="{{path('propertySearchAll')}}">Properties</a></li>
     <li id="contact">Contact</li>
     {% if app.user %}
     <a href="/dashboard"><li id="account"><i class="fas fa-user-circle"></i></li></a>

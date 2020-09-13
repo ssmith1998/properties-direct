@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Properties{% endblock %}
+
+{% block body %}
+
+<div class=" d-flex ">
+<div class=" bg-dark py-3 filters px-3">
+{{ form_start(form) }}
+   
+<div class="row">
+<h3 class="text-center w-100 text-white">Filters</h3>
+<div class="col-12  text-white">
+{{ form_row(form.bathsMax) }}
+</div>
+
+<div class="col-12  text-white">
+{{ form_row(form.bedsMax) }}
+</div>
+<div class="col-12  text-white">
+{{ form_row(form.sort) }}
+</div>
+<div class="col-12  text-white">
+{{ form_row(form.priceMax) }}
+
+
+</div>
+
+<div class="col-12">
+{{ form_row(form.submit) }}
+
+
+</div>
+
+</div>
+   
+{{ form_end(form) }}
+</div>
+
+<div class="content">
+<div class="container">
+
+{% for property in properties  %}
+
+{# {% set property = _property[0] %} #}
+<a href="/property/profile/{{property.getId()}}">
+<div class="propertyWrapper [ my-2 ]">
+
+ <p>{{property.getPropertyAddress().getNeighborHoodName()}}</p>
+<p>{{property.getPropertyAddress().getLine()}}</p> 
+
+
+<img class="w-100 text-center" src="{{ property.getPropertyPhoto().getPhotoLink()}}" alt="">
+
+
+</div>
+</a>
+{% endfor %}
+{# {% if page > 1  %}
+  <a href="/property/search/all/1" title="First page">&laquo;</a> <a href="/property/search/all/{{page - 1}}" title="Previous page">&lsaquo;</a>
+{% endif %}
+{% if page < pages  %}
+ <a href="/property/search/all/{{page + 1}} " title="Next page">Next&rsaquo;</a> <a href="/property/search/all/{{pages}}" title="Last page">Last Page&raquo;</a>'  
+{% endif %} #}
+
+    <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="/property/search/all/{{page - 1}}">Previous</a></li>
+    {% for i in 1..10  %}
+           <li class="page-item"><a class="page-link" href="/property/search/all/{{i}}">{{i}}</a></li>
+    {% endfor %}
+    ...
+    <li class="page-item"><a class="page-link" href="/property/search/all/{{pages}}">{{pages}}</a></li>
+
+
+    <li class="page-item"><a class="page-link" href="/property/search/all/{{page + 1}}">Next</a></li>
+  </ul>
+</nav>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
