@@ -47,6 +47,10 @@
 <h5 class="pl-2">Min Price:£{{property.getPropertyCommunity().getPriceMin() == 0.00 ?"N/A":property.getPropertyCommunity().getPriceMin() |number_format(2)}}</h5>
 <h5 class="pl-2">Baths Max:{{property.getPropertyCommunity().getBathsMax() == 0.00 ?"N/A":property.getPropertyCommunity().getBathsMax()}}</h5>
 <h5 class="pl-2">Beds Max:{{property.getPropertyCommunity().getBedsMax() == 0.00 ?"N/A":property.getPropertyCommunity().getBedsMax()}}</h5>
+
+{% if app.user %}
+{% if property.getFavourites()|length > 0 %}
+  
 {% for favourite in property.getFavourites() %}
 {% if favourite.getUser == app.user %}
 {% if favourite.getFavourited() == true %}
@@ -56,6 +60,10 @@
 {% endif %}
 {% endif %}
 {% endfor %}
+{% else %}
+<a href="/property/favourite/{{property.getId()}}" class="btn btn-outline-primary">Add to Favourites</a>  
+{% endif %}
+{% endif %}
 
 </div>
 <div class="tabInfo2 p-2">
