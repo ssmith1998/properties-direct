@@ -84,10 +84,16 @@ class Property
      */
     private $bookings;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Favourite::class, mappedBy="property")
+     */
+    private $favourites;
+
     public function __construct()
     {
         $this->propertyPhotos = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->favourites = new ArrayCollection();
     }
 
     /**
@@ -312,6 +318,37 @@ class Property
             // set the owning side to null (unless already changed)
             if ($booking->getProperty() === $this) {
                 $booking->setProperty(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Favourite[]
+     */
+    public function getFavourites(): Collection
+    {
+        return $this->favourites;
+    }
+
+    public function addFavourite(Favourite $favourite): self
+    {
+        if (!$this->favourites->contains($favourite)) {
+            $this->favourites[] = $favourite;
+            $favourite->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavourite(Favourite $favourite): self
+    {
+        if ($this->favourites->contains($favourite)) {
+            $this->favourites->removeElement($favourite);
+            // set the owning side to null (unless already changed)
+            if ($favourite->getProperty() === $this) {
+                $favourite->setProperty(null);
             }
         }
 

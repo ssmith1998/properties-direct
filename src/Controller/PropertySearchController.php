@@ -80,6 +80,14 @@ class PropertySearchController extends AbstractController
         // get query params
         $submittedFilters = $request->query->get(('form'));
 
+        // string for url pagination 
+        $submittedFiltersString = null;
+
+        // make sure string is only set if there are submitted filters are set
+        if (!empty($submittedFilters)) {
+            $submittedFiltersString = '?form%5BbathsMax%5D=' . $submittedFilters["bathsMax"] . '&form%5BbedsMax%5D=' . $submittedFilters["bedsMax"] . '&form%5Bsort%5D=' . $submittedFilters["sort"] . '&form%5BpriceMax%5D=' . $submittedFilters["priceMax"] . '&form%5Bsubmit%5D=&form%5B_token%5D=' . $submittedFilters["_token"] . '';
+        }
+
         $form = $this->createFormBuilder()
             ->setMethod('GET')
             ->add('bathsMax', ChoiceType::class, [
@@ -165,33 +173,20 @@ class PropertySearchController extends AbstractController
 
         $pages = ceil($propertiesCount / $limit);
 
-
-
-
-
-
-
-
         $start = $offset + 1;
         $end = min(($offset + $limit), $propertiesCount);
 
-        $prevlink = $page > 1 ? '<a href="?page=1" title="First page">&laquo;</a> <a href="?page=' . ($page - 1) . '" title="Previous page">&lsaquo;</a>' : '<span class="disabled">&laquo;</span> <span class="disabled">&lsaquo;</span>';
-        $nextlink = $page < $pages ? '<a href="?page=' . ($page + 1) . '" title="Next page">&rsaquo;</a> <a href="?page=' . $pages . '" title="Last page">&raquo;</a>' : '<span class="disabled">&rsaquo;</span> <span class="disabled">&raquo;</span>';
-
-        $pagination =  '<div id="paging"><p>' . $prevlink . ' Page ' . $page . ' of ' . $pages . ' pages, displaying ' . $start . '-' . $end . ' of ' . $propertiesCount . ' results ' . $nextlink . ' </p></div>';
 
 
         return $this->render('property_search/search-all.html.twig', [
             'properties' => $properties,
             'form' => $form->createView(),
-            'pagination' => $pagination,
             'page' => $page,
-            'prevlink' => $prevlink,
-            'nextlink' => $nextlink,
             'pages' => $pages,
             'start' => $start,
             'end' => $end,
-            'propertiesCount' => $propertiesCount
+            'propertiesCount' => $propertiesCount,
+            'filters' => $submittedFiltersString
 
 
         ]);

@@ -65,15 +65,15 @@
 
     <nav aria-label="Page navigation example">
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="/property/search/all/{{page - 1}}">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="/property/search/all/{{page - 1}}{{filters == null ? null : filters}}">Previous</a></li>
     {% for i in 1..10  %}
-           <li class="page-item"><a class="page-link" href="/property/search/all/{{i}}">{{i}}</a></li>
+           <li class="page-item"><a class="page-link" href="/property/search/all/{{i}}{{filters}}">{{i}}</a></li>
     {% endfor %}
     ...
-    <li class="page-item"><a class="page-link" href="/property/search/all/{{pages}}">{{pages}}</a></li>
+    <li class="page-item"><a class="page-link" href="/property/search/all/{{pages}}{{filters}}">{{pages}}</a></li>
 
 
-    <li class="page-item"><a class="page-link" href="/property/search/all/{{page + 1}}">Next</a></li>
+    <li class="page-item"><a class="page-link" href="/property/search/all/{{page + 1}}{{filters}}">Next</a></li>
   </ul>
 </nav>
 </div>

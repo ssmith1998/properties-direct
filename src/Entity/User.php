@@ -43,9 +43,15 @@ class User implements UserInterface
      */
     private $booking;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Favourite::class, mappedBy="user")
+     */
+    private $favourites;
+
     public function __construct()
     {
         $this->booking = new ArrayCollection();
+        $this->favourites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,6 +152,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($booking->getUser() === $this) {
                 $booking->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Favourite[]
+     */
+    public function getFavourites(): Collection
+    {
+        return $this->favourites;
+    }
+
+    public function addFavourite(Favourite $favourite): self
+    {
+        if (!$this->favourites->contains($favourite)) {
+            $this->favourites[] = $favourite;
+            $favourite->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavourite(Favourite $favourite): self
+    {
+        if ($this->favourites->contains($favourite)) {
+            $this->favourites->removeElement($favourite);
+            // set the owning side to null (unless already changed)
+            if ($favourite->getUser() === $this) {
+                $favourite->setUser(null);
             }
         }
 
