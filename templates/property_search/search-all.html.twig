@@ -65,15 +65,40 @@
 
     <nav aria-label="Page navigation example">
   <ul class="pagination">
+  {% if page == 1 %}
+
+  {% else %}
+    
     <li class="page-item"><a class="page-link" href="/property/search/all/{{page - 1}}{{filters == null ? null : filters}}">Previous</a></li>
-    {% for i in 1..10  %}
-           <li class="page-item"><a class="page-link" href="/property/search/all/{{i}}{{filters}}">{{i}}</a></li>
+  {% endif %}
+  {# loop over how many pages there are in result #}
+    {% for i in 1..pages - 5  %}
+    {# check if the current page 'i' == the current page displayed. if so active class added #}
+          {% if i == page %}
+           <li class="page-item active"><a class="page-link" href="/property/search/all/{{i}}{{filters}}">{{i}}</a></li>
+          {% else %}
+           <li class="page-item "><a class="page-link" href="/property/search/all/{{i}}{{filters}}">{{i}}</a></li>
+            
+          {% endif %}
     {% endfor %}
     ...
-    <li class="page-item"><a class="page-link" href="/property/search/all/{{pages}}{{filters}}">{{pages}}</a></li>
+    {% if page == pages  %}
+         <li class="page-item active"><a class="page-link" href="/property/search/all/{{pages}}{{filters}}">{{pages}}</a></li>
+    {% else %}
+          <li class="page-item"><a class="page-link" href="/property/search/all/{{pages}}{{filters}}">{{pages}}</a></li>
+    {% endif %}
 
 
+      
+    {% if page == pages  %}
+
+    {% else %}
+      
     <li class="page-item"><a class="page-link" href="/property/search/all/{{page + 1}}{{filters}}">Next</a></li>
+      
+    {% endif %}
+
+    
   </ul>
 </nav>
 </div>

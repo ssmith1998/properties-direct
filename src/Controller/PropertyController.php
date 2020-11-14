@@ -80,10 +80,13 @@ class PropertyController extends AbstractController
             $favourited = true;
             $favouriteRecord[0]->setFavourited(false);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Removed from Favourites');
         } else if ($noneFavouritedRecord) {
             $favourited = false;
             $noneFavouritedRecord[0]->setFavourited(true);
             $entityManager->flush();
+            $this->addFlash('success', 'Added from Favourites');
         } else {
             $favourited = true;
             $favourite = new Favourite();
@@ -93,6 +96,8 @@ class PropertyController extends AbstractController
             $favourite->setFavourited(true);
             $entityManager->persist($favourite);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Added to Favourites');
         }
 
         return $this->redirectToRoute('property', ['id' => $currentProperty[0]->getId()]);

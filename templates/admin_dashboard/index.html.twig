@@ -1,0 +1,16 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+<div class="wrapperSecurity">
+{% if bookings|length > 0  %}
+{% for booking in bookings %}
+    <p>{{booking.getId()}}</p>
+{% endfor %}
+{% else %}
+    <p class="alert alert-danger" role="alert">There are no current bookings</p>
+{% endif %}
+</div>
+{% endblock %}

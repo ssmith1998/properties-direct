@@ -43,7 +43,7 @@
        {% endblock  %}
 
                {% for message in app.flashes('success') %}
-            <div class="alert alert-success d-flex justify-content-center">
+            <div class="alert alert-success d-flex justify-content-center flash-message">
                 {{ message }}
             </div>
         {% endfor %}
