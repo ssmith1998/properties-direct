@@ -25,7 +25,6 @@
     <li id="home"><a href="{{path('home')}}">Home</a></li>
     <li id="about">About</li>
     <li id="properties"><a href="{{path('propertySearchAll')}}">Properties</a></li>
-    <li id="contact">Contact</li>
     {% if app.user %}
     <a href="/dashboard"><li id="account"><i class="fas fa-user-circle"></i></li></a>
     <a href="/logout"><li>Logout</li></a>
@@ -34,6 +33,7 @@
      <a href="/register"><li>Register</li></a>
     <a href="/login"><li>Login</li></a>
     {% endif %}
+      <a href="/contact"><li id="contact">Contact</li></a> 
     </ul>
     </div>
     

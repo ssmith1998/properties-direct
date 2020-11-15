@@ -218,6 +218,33 @@ form[name="filter_form"]
 
 }
 
+.contactBanner{
+    background-image: url("../../public/images/Screenshot\ 2020-11-15\ at\ 20.29.11.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 40vh;
+    margin-top: 80px;
+    background-position: center;
+
+  
+
+    .overlayBanner{
+        background: #000000;
+        background-color: rgba(0,0,0,0.5);
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        h1{
+            color: #ffffff;
+            font-size: 60px;
+            font-weight: bold;
+        }
+    }
+}
+
 
 
 

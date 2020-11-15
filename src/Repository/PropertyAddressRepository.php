@@ -25,7 +25,91 @@ class PropertyAddressRepository extends ServiceEntityRepository
 
 
 
-    public function searchProp($propertyAddress, $yearBuilt, $listDate, $bathsMax, $bedsMax, $sort,  $priceMax)
+    public function searchProp($propertyAddress, $yearBuilt, $listDate, $bathsMax, $bedsMax, $sort,  $priceMax, $offset)
+    {
+
+        $ListDate = new \DateTime($listDate->format("d-m-Y") . " 00:00:00");
+        $YearBuilt = new \DateTime($yearBuilt->format("d-m-Y") . " 00:00:00");
+
+
+
+
+        $qb = $this->createQueryBuilder('pa')
+            ->select('p, pa, PropertyPhotos')
+            ->addSelect('p.propertyType AS PropertyType')
+            ->addSelect('p.listingStatus AS ListingStatus')
+            ->addSelect('PropertyPhotos.photoLink AS Link')
+            ->innerJoin('pa.property', 'p')
+            ->leftJoin('p.propertyCommunity', 'pc')
+            ->leftJoin('p.propertyPhotos', 'PropertyPhotos')
+
+
+
+            ->where("pa.neighborHoodName = :propertyAddress")
+            ->setParameter('propertyAddress', $propertyAddress)
+
+
+            ->andWhere('p.yearBuilt <= :yearBuilt')
+            ->setParameter('yearBuilt', $YearBuilt)
+            ->andWhere('p.listDate <= :listDate')
+            ->setParameter('listDate', $ListDate)
+
+
+            ->groupBy('p.id, PropertyPhotos');
+
+        // ->innerJoin('p.propertyPhotos', 'ph')
+
+
+        // filters
+
+
+        if (!empty($bathsMax)) {
+            $qb->andWhere('pc.bathsMax <= :bathsMax')
+                ->setParameter('bathsMax', $bathsMax);
+        }
+
+
+
+        if (!empty($bedsMax)) {
+
+            $qb->andWhere('pc.bedsMax <= :bedsMax')
+                ->setParameter('bedsMax', $bedsMax);
+        }
+
+        if (!empty($sort) && $sort == "lowest") {
+            $qb->orderBy('pc.priceMax', 'ASC');
+        }
+
+        if (!empty($sort) && $sort == "highest") {
+            $qb->orderBy('pc.priceMax', 'DESC');
+        }
+
+        if (!empty($priceMax)) {
+            $qb->andWhere('pc.priceMax <= :priceMax')
+                ->setParameter('priceMax', $priceMax);
+        }
+
+        // filters end
+
+        $qb
+            ->setFirstResult($offset);
+
+
+
+
+
+
+
+
+
+        $result =  $qb->getQuery()->getResult();
+
+        // dd($result);
+        return $result;
+    }
+
+
+    public function searchPropCount($propertyAddress, $yearBuilt, $listDate, $bathsMax, $bedsMax, $sort,  $priceMax)
     {
 
         $ListDate = new \DateTime($listDate->format("d-m-Y") . " 00:00:00");
@@ -100,7 +184,7 @@ class PropertyAddressRepository extends ServiceEntityRepository
 
 
 
-        $result =  $qb->getQuery()->getResult();
+        $result =  count($qb->getQuery()->getResult());
 
         // dd($result);
         return $result;

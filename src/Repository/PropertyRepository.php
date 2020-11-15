@@ -137,7 +137,7 @@ class PropertyRepository extends ServiceEntityRepository
         }
 
 
-        dump(count($qb->getQuery()->getScalarResult()));
+        // dd(count($qb->getQuery()->getScalarResult()));
 
         return count($qb->getQuery()->getScalarResult());
     }

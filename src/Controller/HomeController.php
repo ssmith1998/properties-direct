@@ -21,7 +21,7 @@ class HomeController extends AbstractController
         $property = new Property();
 
         $form = $this->createForm(PropertyType::class, $property, [
-            'action' => $this->generateUrl('propertySearch'),
+            'action' => $this->generateUrl('propertySearch', array('page' => 1)),
             'method' => 'GET',
         ]);
 

@@ -39,6 +39,7 @@
 
 <div class="content">
 <div class="container">
+{% if properties|length > 0 %}
 
 {% for property in properties  %}
 
@@ -56,13 +57,13 @@
 </div>
 </a>
 {% endfor %}
-{# {% if page > 1  %}
-  <a href="/property/search/all/1" title="First page">&laquo;</a> <a href="/property/search/all/{{page - 1}}" title="Previous page">&lsaquo;</a>
-{% endif %}
-{% if page < pages  %}
- <a href="/property/search/all/{{page + 1}} " title="Next page">Next&rsaquo;</a> <a href="/property/search/all/{{pages}}" title="Last page">Last Page&raquo;</a>'  
-{% endif %} #}
 
+{% else %}
+  <p class="alert alert-primary text-center" role="alert">No results match your search</p>
+{% endif %}
+
+{% if properties|length > 0  %}
+  
     <nav aria-label="Page navigation example">
   <ul class="pagination">
   {% if page == 1 %}
@@ -101,6 +102,9 @@
     
   </ul>
 </nav>
+
+{% endif %}
+
 </div>
 </div>
 </div>

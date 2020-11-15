@@ -22,9 +22,9 @@ use Knp\Component\Pager\PaginatorInterface;
 class PropertySearchController extends AbstractController
 {
     /**
-     * @Route("/property/search", name="propertySearch")
+     * @Route("/property/{page}", name="propertySearch")
      */
-    public function index(Request $request, PropertyAddressRepository $repo)
+    public function index(Request $request, PropertyAddressRepository $repo, $page = 1)
     {
         $propertylistDate = $request->query->get('property')['listDate'];
         $propertyYearBuilt = $request->query->get('property')['yearBuilt'];
@@ -39,11 +39,6 @@ class PropertySearchController extends AbstractController
         $submittedFilters = $request->query->get(('filter_form'));
 
 
-
-
-
-
-
         $form = $this->createForm(FilterFormType::class);
 
         $data = null;
@@ -54,16 +49,29 @@ class PropertySearchController extends AbstractController
 
             $data = $form->getData();
         }
+        $limit = 10;
 
-        $result = $repo->searchProp($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, $data['bathsMax'], $data['bedsMax'], $data['sort'], $data['priceMax']);
+        $offset = ($page - 1) * $limit;
+
+        $result = $repo->searchProp($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, $data['bathsMax'], $data['bedsMax'], $data['sort'], $data['priceMax'], $offset);
+        $count = $repo->searchPropCount($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, $data['bathsMax'], $data['bedsMax'], $data['sort'], $data['priceMax']);
 
 
+        $pages = ceil($count / $limit);
+
+        $start = $offset + 1;
+        $end = min(($offset + $limit), $count);
 
 
         return $this->render('property_search/index.html.twig', [
             'controller_name' => 'PropertySearchController',
             'result' => $result,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'page' => $page,
+            'pages' => $pages,
+            'start' => $start,
+            'end' => $end,
+            'propertiesCount' => $count
 
         ]);
     }
@@ -170,6 +178,7 @@ class PropertySearchController extends AbstractController
 
         $properties = $propertyRepository->findAllProperties($submittedFilters['bathsMax'], $submittedFilters['bedsMax'], $submittedFilters['sort'], $submittedFilters['priceMax'], $offset);
         $propertiesCount = $propertyRepository->countAllProperties($submittedFilters['bathsMax'], $submittedFilters['bedsMax'], $submittedFilters['sort'], $submittedFilters['priceMax']);
+
 
         $pages = ceil($propertiesCount / $limit);
 
