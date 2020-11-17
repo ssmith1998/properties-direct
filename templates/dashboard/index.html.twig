@@ -35,7 +35,7 @@
     <h4 class="text-center">My Bookings</h4>
     {% for booking in app.user.getBooking() %}
     <div class="card bookingInfo p-2 my-1">
-    <h6>Property: {{booking.getPropertyName()}}</h6>
+    <h6>Property: {{booking.getProperty().getPropertyAddress().getLine()}}</h6>
     <p>Booking Time: {{booking.getTimeOfViewing()|date('H:i:s') }}</p>
     <p>Booking Date: {{booking.getDateOfViewing()|date("m/d/Y") }}</p>
     <a href="/property/profile/{{booking.getProperty().getId()}}"><button class="btn btn-outline-primary w-100">View Property</button></a>

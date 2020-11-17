@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\AdminUser;
 use App\Entity\Booking;
 use App\Entity\User;
+use App\Form\AdminUserType;
 use App\Form\UpdateBookingType;
 use App\Repository\AdminUserRepository;
 use App\Repository\BookingRepository;
@@ -16,6 +17,7 @@ use ProxyManager\ProxyGenerator\ValueHolder\MethodGenerator\Constructor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class AdminDashboardController extends AbstractController
@@ -23,10 +25,13 @@ class AdminDashboardController extends AbstractController
 
     private $em;
 
+    private $encoder;
 
-    public function __construct(EntityManagerInterface $entityManager)
+
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
     {
         $this->em = $entityManager;
+        $this->encoder = $encoder;
     }
 
 
@@ -165,6 +170,40 @@ class AdminDashboardController extends AbstractController
 
 
         return $this->render('admin_booking/booking-update.html.twig', [
+            'form' => $form->createView()
+
+        ]);
+    }
+
+    /** 
+     * @Route("/admin/add/adminuser", name="addAdminUser")
+     */
+    public function addAdminUser(Request $request)
+    {
+
+        $adminUser = new AdminUser();
+        $form = $form = $this->createForm(AdminUserType::class, $adminUser);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $adminUserData = $form->getData();
+            $pass = $adminUserData->getPassword();
+            $username = $adminUserData->getUsername();
+
+            $encoded = $this->encoder->encodePassword($adminUser, $pass);
+
+            $adminUser->setPassword($encoded);
+            $adminUser->setUsername($username);
+
+            $this->em->persist($adminUser);
+            $this->em->flush();
+
+
+            return $this->redirectToRoute('admin_dashboard');
+        }
+
+        return $this->render('admin_add_adminUser/add-adminUser.html.twig', [
             'form' => $form->createView()
 
         ]);

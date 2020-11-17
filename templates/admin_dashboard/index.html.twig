@@ -8,12 +8,12 @@
 <h1 class="text-center pb-2">Admin Dashboard</h1>
 <div class="row">
 <div class="col-md-6 px-5">
-<div class="card p-3">
+<div class="card p-3" style="overflow:scroll; height:400px;">
 <h3>Bookings</h3>
 {% if bookings|length > 0  %}
 {% for booking in bookings %}
-<div class="bookingItem mt-3">
-    <h6>User: {{booking.getUser().getUsername()}}</h6>
+<div class="bookingItem card p-3 mt-3">
+    <h6>Client: {{booking.getUser().getUsername()}}</h6>
     <h6>Property: {{booking.getProperty().getPropertyAddress().getLine()}}</h6>
     <p>Booking Time: {{booking.getTimeOfViewing()|date('H:i:s') }}</p>
     <p>Booking Date: {{booking.getDateOfViewing()|date("m/d/Y") }}</p>
@@ -30,18 +30,29 @@
 {% endif %}
 </div>
 </div>
-<div class="col-md-6">
-<div class="card h-100 p-3">
+<div class="col-md-6" >
+<div class="card h-100 p-3 mx-4">
+<div class="cardHeader d-flex flex-row align-items-center justify-content-between">
     <h3>Users</h3>
+    <a href="/admin/add/adminuser"><button class="btn btn-primary">Add Admin +</button></a>
+</div>
+    
 <div class="row">
 <div class="col-sm-6">
 <div class="admin">
     <h4>Admin</h4>
     {% if adminUsers|length > 0 %}
         {% for admin in adminUsers  %}
+        <div class="card p-3 my-2">
             <h6>Username: {{admin.username}}</h6>
             <div class="actionsWrapper">
-             <a href="/admin/delete/adminuser/{{admin.id}}"><button class="btn btn-danger">Delete</button></a>
+            {% if app.user.id == admin.id  %}
+
+            {% else %}
+            <a href="/admin/delete/adminuser/{{admin.id}}"><button class="btn btn-danger">Delete</button></a> 
+            {% endif %}
+            
+            </div>
             </div>
         {% endfor %}
     {% endif %}
@@ -52,10 +63,12 @@
     <h4>Users</h4>
      {% if users|length > 0 %}
         {% for user in users  %}
+        <div class="card p-3">
             <h6>Username: {{user.username}}</h6>
             <div class="actionsWrapper">
             <a href="/admin/delete/user/{{user.id}}"><button class="btn btn-danger">Delete</button></a>
             </div>
+        </div>
         {% endfor %}
     {% endif %}
     </div>

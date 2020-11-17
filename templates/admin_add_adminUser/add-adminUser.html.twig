@@ -1,0 +1,24 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+<div class="wrapper" style="margin-top:127px;">
+<div class="container">
+<h1 class="text-center">Add Admin User</h1>
+{{ form_start(form) }}
+        <div class="form-group">
+            {{ form_row(form.username) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.password) }}
+        </div>
+         <div class="form-group text-center">
+            {{ form_row(form.save) }}
+        </div>
+
+{{ form_end(form) }}
+</div>
+</div>
+
+{% endblock %}
