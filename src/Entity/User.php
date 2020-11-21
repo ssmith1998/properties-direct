@@ -28,6 +28,11 @@ class User implements UserInterface
     private $username;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $email;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -69,12 +74,44 @@ class User implements UserInterface
         return (string) $this->username;
     }
 
+    /**
+     * setUsername
+     *
+     * @param  mixed $username
+     * @return self
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
 
         return $this;
     }
+
+    /**
+     * getEmail
+     *
+     * @return string
+     */
+    public function getEmail(): ?string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * setEmail
+     *
+     * @param  mixed $email
+     * @return self
+     */
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+
+
 
     /**
      * @see UserInterface

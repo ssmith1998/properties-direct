@@ -17,6 +17,9 @@ class DashboardController extends AbstractController
     public function index(FavouriteRepository $favouriteRepository)
     {
 
+
+
+
         if (!$this->isGranted("IS_AUTHENTICATED_FULLY")) {
             return $this->redirectToRoute("app_login");
         }

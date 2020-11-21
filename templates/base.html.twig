@@ -9,12 +9,14 @@
         <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
 
+
         {# <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"> #}
 
 
     </head>
     <body>
     {% block header  %}
+    {# <div class="loader"></div> #}
     <header class="pt-3 px-3">
     <div class="row">
     <div class="logoName col-md-6 pb-2">
@@ -25,7 +27,13 @@
     <li id="home"><a href="{{path('home')}}">Home</a></li>
     <li id="properties"><a href="{{path('propertySearchAll')}}">Properties</a></li>
     {% if app.user %}
+    <div class="dropdown">
     <a href="/dashboard"><li id="account"><i class="fas fa-user-circle"></i></li></a>
+    <div class="dropdownContent">
+    <a href="/password/reset"><i class="fas fa-key mr-1"></i>Reset Password</a>
+    <a href="/profile/edit"><i class="fas fa-user-circle mr-1"></i>Edit Profile</a>
+    </div>
+    </div>
     <a href="/logout"><li>Logout</li></a>
 
     {% else %}
@@ -46,8 +54,17 @@
                 {{ message }}
             </div>
         {% endfor %}
+              {% for notice in app.flashes('notice') %}
+            <div class="alert alert-danger d-flex justify-content-center flash-message">
+                {{ notice }}
+            </div>
+        {% endfor %}
+
+
+        
+        
         {% block body %}
-       
+
         
         
         {% endblock %}
@@ -55,9 +72,9 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
     <script src="https://kit.fontawesome.com/f2e27c939b.js" crossorigin="anonymous"></script> 
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>    <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>    <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     {{ encore_entry_script_tags('app') }}
     </body>
 </html>

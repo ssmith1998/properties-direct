@@ -18,7 +18,37 @@ import '../js/slick';
 
 $(document).ready(function () {
 
+    $('.passwordConfirm').on('keyup', function () {
+        var passConfirm = $('.confirmPass').val();
+        var pass = $('.pass').val();
+        var errorMsg = document.getElementById('error-msg');
 
+        // console.log(pass);
+        if (pass === '' || pass === null || passConfirm === '' || passConfirm === null) {
+            errorMsg.innerHTML = "Please fill all fields";
+            $('#error-msg').css('color', 'red');
+
+        } else {
+            if (passConfirm === pass) {
+                console.log('yes');
+                errorMsg.innerHTML = "Passwords Match";
+                $('#error-msg').css('color', 'green');
+
+            } else {
+                console.log('no');
+                errorMsg.innerHTML = "Passwords do not match";
+                $('#error-msg').css('color', 'red');
+
+
+            
+            }
+        }
+    })
+
+//     $(window).on("load" , function () {
+//         $('.loader').fadeOut();
+//     })
+  
     // property Photos Slider
 
     $('.propertyPhotoSlider').slick({
@@ -103,7 +133,28 @@ $(document).ready(function () {
 
     })
 
-    // $('.js-datepicker').datepicker();
+
+   
+        
+
+
+    
 
 
 })
+
+
+
+//    jQuery(function($){ // wait until the DOM is ready
+//        $(".js-datepicker").datepicker({
+//            clearBtn: true,
+//            autoclose: true
+           
+//        });
+       
+//        $('.js-datepicker').on('changeDate', function() {
+//         $('.js-hidden').val(
+//             $('.js-datepicker').datepicker('getFormattedDate')
+//         );
+//     });
+//         });
