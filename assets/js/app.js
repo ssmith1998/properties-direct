@@ -8,6 +8,7 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.scss';
 import '../css/slick.css';
+import '../css/hamburger.min.css';
 
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
@@ -45,11 +46,27 @@ $(document).ready(function () {
         }
     })
 
+    var hamburger = document.querySelector(".hamburger");
+    // On click
+    hamburger.addEventListener("click", function() {
+      // Toggle class "is-active"
+      hamburger.classList.toggle("is-active");
+      // Do something else, like open/close menu
+        $('.mobileMenu').toggleClass("activeMenu");
+        $('.overlay').toggleClass("show");
+       
+        
+
+    });
+
+ 
 //     $(window).on("load" , function () {
 //         $('.loader').fadeOut();
 //     })
   
     // property Photos Slider
+     // Look for .hamburger
+
 
     $('.propertyPhotoSlider').slick({
         // dots: true,
