@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
     background: lightgray;
     margin: 0px;
     padding: 0px;
@@ -7,60 +8,65 @@ body, html {
     width: 100%;
 }
 
-.row{
+.row {
     margin: 0px;
     padding: 0px;
 }
 
-.wrapper{
+.wrapper {
     margin-top: 127px;
 }
 
 
-header{
+header {
     background: #000000;
     width: 100%;
     z-index: 10;
     height: 80px;
     position: fixed;
-    
 
-    .logoName{
-        h1{
+
+    .logoName {
+        h1 {
             font-family: 'Rowdies', cursive;
         }
     }
 
-    .activeMenuItem{
+    .activeMenuItem {
         border-bottom: solid yellow;
-                padding-bottom: 19px;
+        padding-bottom: 19px;
     }
 
 
 
 
-    .mainMenu{
+    .mainMenu {
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        ul{
+
+        ul {
             padding: 0px;
             margin: 0px;
-            li{
+
+            li {
                 list-style: none;
                 margin: 0px 10px 0px 10px;
                 color: #ffffff;
                 font-size: 22px;
-                &:hover{
+
+                &:hover {
                     cursor: pointer;
                 }
+
                 padding-bottom: 19px;
 
-                a{
+                a {
                     color: white;
                     text-decoration: none;
                 }
-                i{
+
+                i {
                     font-size: 22px;
                 }
             }
@@ -69,10 +75,10 @@ header{
         }
     }
 
-  
+
 }
 
-#heroImage{
+#heroImage {
     background-image: url('../../public/images/background-hero.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -81,150 +87,156 @@ header{
     justify-content: center;
     align-items: center;
 
-    .formWrapper{
+    .formWrapper {
         background: rgba(0, 0, 0, 0.5);
- 
+
         color: #ffffff;
         padding: 20px;
         border-radius: 10px;
-        width: 67vw;    }
+        width: 67vw;
+    }
 }
-.propertyWrapper{
+
+.propertyWrapper {
     position: relative;
-    p{
+
+    p {
         position: absolute;
         color: #ffffff;
         margin: 0px;
 
-        &:first-of-type{
+        &:first-of-type {
             bottom: 0px;
             background: rgba(0, 0, 0, 0.5);
             padding: 5px;
             font-size: 30px;
+
+            @media only screen and (max-width: 768px) {
+                font-size: 15px;
+            }
         }
 
 
-        &:nth-last-of-type(1){
+        &:nth-last-of-type(1) {
             bottom: 0px;
             right: 0px;
             background: rgba(0, 0, 0, 0.5);
             padding: 5px;
             font-size: 30px;
+
+            @media only screen and (max-width: 768px) {
+                font-size: 15px;
+            }
         }
     }
 
-  
+
 }
-.slick-prev, .slick-next{
+
+.slick-prev,
+.slick-next {
     position: absolute;
     top: 50%;
     z-index: 1;
 
-    i{
+    i {
         font-size: 50px;
     }
-    
+
 }
-.slick-next{
+
+.slick-next {
     right: 5px;
 }
 
-.slick-prev{
+.slick-prev {
     left: 5px;
 }
 
 
-#map{
+#map {
     height: 400px;
 }
 
-.propertyPhotoSlider
-{
+.propertyPhotoSlider {
     height: 399px;
 
-    .slick-list
-    {
+    .slick-list {
         height: 399px;
     }
 }
-form[name="booking"], form[name="registration_form"]{
+
+form[name="booking"],
+form[name="registration_form"] {
     width: 75%;
     margin: 0px auto;
 }
 
-form[name="filter_form"]
-{
+form[name="filter_form"] {
     height: 100%;
-  
 
-    .col-12{
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    margin-bottom: 60px;
 
-    div{
-        width: 75%;
-    }
+    .col-12 {
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        margin-bottom: 60px;
 
-    label{
-        color: #ffffff;
-    }
+        div {
+            width: 75%;
+        }
+
+        label {
+            color: #ffffff;
+        }
     }
 }
 
-
-
-
-
-.tabInfo2{
+.tabInfo2 {
     display: none;
 
 }
 
-.bookingContainer{
+.bookingContainer {
     overflow-y: scroll;
     height: 500px;
 }
 
-.filters{
+.filters {
     position: fixed;
     height: 100%;
     left: 0px;
     width: 300px;
     top: 80px;
 
-    .col-12{
+    .col-12 {
         margin-bottom: 60px;
     }
-  
+
 
 }
 
-.content
-{
+.content {
     margin-left: 300px;
     margin-top: 81px;
     width: 100%;
 }
 
-.bookings-wrapper
-{
+.bookings-wrapper {
     margin-top: 80px;
 }
 
-.flash-message
-{
+.flash-message {
     margin-top: 81px;
 }
 
 
-.wrapperSecurity{
+.wrapperSecurity {
     margin-top: 187px;
 
 }
 
-.contactBanner{
+.contactBanner {
     background-image: url("../../public/images/Screenshot\ 2020-11-15\ at\ 20.29.11.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -232,18 +244,18 @@ form[name="filter_form"]
     margin-top: 80px;
     background-position: center;
 
-  
 
-    .overlayBanner{
+
+    .overlayBanner {
         background: #000000;
-        background-color: rgba(0,0,0,0.5);
+        background-color: rgba(0, 0, 0, 0.5);
         height: 100%;
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
 
-        h1{
+        h1 {
             color: #ffffff;
             font-size: 60px;
             font-weight: bold;
@@ -255,78 +267,84 @@ form[name="filter_form"]
 .dropdown {
     position: relative;
     display: inline-block;
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdownContent {
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdownContent {
     padding: 2px;
     color: #ffffff;
     display: none;
     position: absolute;
     background-color: #000000;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 
-    a:hover, a{
+    a:hover,
+    a {
         width: 100%;
         padding: 10px;
         color: #ffffff;
         text-decoration: none;
-    
+
     }
-  }
-  .dropdown:hover .dropdownContent {
+}
+
+.dropdown:hover .dropdownContent {
     display: flex;
     flex-direction: column;
-  }
+}
 
-  .hamburger-inner, .hamburger-inner:after, .hamburger-inner:before{
-      background-color: #ffffff!important;
-  }
-  button:focus{
-      outline: none!important;
-  }
+.hamburger-inner,
+.hamburger-inner:after,
+.hamburger-inner:before {
+    background-color: #ffffff !important;
+}
 
-  .mobileMenu{
+button:focus {
+    outline: none !important;
+}
+
+.mobileMenu {
     background: #ffffff;
     width: 0;
     position: fixed;
     top: 80px;
     left: 0px;
     height: 100%;
-    z-index: 2;
+    z-index: 4;
     transition: 0.8s;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 60px;
-    
 
-     a, a:hover{
-     
+
+    a,
+    a:hover {
+
         text-decoration: none;
         font-size: 30px;
         color: #000000;
         display: block;
         transition: 0.3s;
         font-family: 'Rowdies', cursive;
-    
-     }
 
-  }
+    }
 
-  .activeMenu{
-      width: 70%;
-      
-  }
+}
 
-  .show{
-      display: block!important;
-  }
+.activeMenu {
+    width: 70%;
 
-  .overlay{
+}
+
+.show {
+    display: block !important;
+}
+
+.overlay {
     background: black;
     width: 100%;
     height: 100%;
@@ -334,28 +352,63 @@ form[name="filter_form"]
     z-index: 1;
     position: fixed;
     display: none;
-  }
+}
 
-  .logoName{
-      h1{
+.logoName {
+    h1 {
         @media only screen and (max-width:760px) {
             font-size: 2rem;
         }
+
         @media only screen and (max-width:500px) {
             font-size: 1.5rem;
         }
-      }
-    
-  }
+    }
 
- 
-     .content{
-        @media only screen and (max-width:990px) {
-            margin-left: 0px;
-        } 
-     }
-   
- 
+}
+
+
+.content {
+    @media only screen and (max-width:990px) {
+        margin-left: 0px;
+    }
+}
+
+
+.filtersMobile {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 47px;
+    background: #000000;
+    z-index: 4;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+
+    .filtersMobile__titleTab {
+        width: 100%;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: blue;
+        padding: 10px;
+    }
+
+    .filtersMobile_content {
+        height: 85%;
+    }
+
+
+}
+
+.filtersMobile__active {
+    height: 80vh;
+}
+
+
 
 //   .loader{
 //       background: grey;
@@ -364,7 +417,3 @@ form[name="filter_form"]
 //       position: fixed;
 //       z-index:400;
 //   }
-
-
-
-

@@ -3,110 +3,172 @@
 {% block title %}Properties{% endblock %}
 
 {% block body %}
+{# filters mobile div #}
+<div class="filtersMobile d-lg-none">
+  <div class="filtersMobile__titleTab">
+    <h4 class="text-white">Filters</h4>
+  </div>
+  <div class="filtersMobile__content">
+    <div class="filtersMobile__filtersForm p-3">
+      {{ form_start(form2) }}
 
+      <div class="row">
+        <div class="col-12  text-white">
+          {{form_row(form2.bathsMax) }}
+        </div>
+
+        <div class="col-12  text-white">
+          {{ form_row(form2.bedsMax) }}
+        </div>
+        <div class="col-12  text-white">
+          {{ form_row(form2.sort) }}
+        </div>
+        <div class="col-12  text-white">
+          {{ form_row(form2.priceMax) }}
+        </div>
+        <div class="col-12 pt-3">
+          {{ form_row(form2.submit) }}
+
+
+        </div>
+
+      </div>
+
+      {{ form_end(form2) }}
+    </div>
+  </div>
+
+</div>
+{# filters mobile div end #}
 <div class=" d-flex ">
-<div class=" d-none d-lg-block bg-dark py-3 filters px-3">
-{{ form_start(form) }}
-   
-<div class="row">
-<h3 class="text-center w-100 text-white">Filters</h3>
-<div class="col-12  text-white">
-{{ form_row(form.bathsMax) }}
-</div>
+  <div class=" d-none d-lg-block bg-dark py-3 filters px-3">
+    {{ form_start(form) }}
 
-<div class="col-12  text-white">
-{{ form_row(form.bedsMax) }}
-</div>
-<div class="col-12  text-white">
-{{ form_row(form.sort) }}
-</div>
-<div class="col-12  text-white">
-{{ form_row(form.priceMax) }}
+    <div class="row">
+      <h3 class="text-center w-100 text-white">Filters</h3>
+      <div class="col-12  text-white">
+        {{form_row(form.bathsMax) }}
+      </div>
 
-
-</div>
-
-<div class="col-12">
-{{ form_row(form.submit) }}
+      <div class="col-12  text-white">
+        {{ form_row(form.bedsMax) }}
+      </div>
+      <div class="col-12  text-white">
+        {{ form_row(form.sort) }}
+      </div>
+      <div class="col-12  text-white">
+        {{ form_row(form.priceMax) }}
 
 
-</div>
+      </div>
 
-</div>
-   
-{{ form_end(form) }}
-</div>
-
-<div class="content">
-<div class="container">
-{% if properties|length > 0 %}
-
-{% for property in properties  %}
-
-{# {% set property = _property[0] %} #}
-<a href="/property/profile/{{property.getId()}}">
-<div class="propertyWrapper [ my-2 ]">
-
- <p>{{property.getPropertyAddress().getNeighborHoodName()}}</p>
-<p>{{property.getPropertyAddress().getLine()}}</p> 
+      <div class="col-12">
+        {{ form_row(form.submit) }}
 
 
-<img class="w-100 text-center" src="{{ property.getPropertyPhoto().getPhotoLink()}}" alt="">
+      </div>
+
+    </div>
+
+    {{ form_end(form) }}
+  </div>
+
+  <div class="content">
+    <div class="container mb-5">
+      {% if properties|length > 0 %}
+
+      {% for property in properties  %}
+
+      {# {% set property = _property[0] %} #}
+      <a href="/property/profile/{{property.getId()}}">
+        <div class="propertyWrapper [ my-2 ]">
+
+          <p>{{property.getPropertyAddress().getNeighborHoodName()}}</p>
+          <p>{{property.getPropertyAddress().getLine()}}</p>
 
 
-</div>
-</a>
-{% endfor %}
+          <img class="w-100 text-center" src="{{ property.getPropertyPhoto().getPhotoLink()}}" alt="">
 
-{% else %}
-  <p class="alert alert-primary text-center" role="alert">No results match your search</p>
-{% endif %}
 
-{% if properties|length > 0  %}
-  
-    <nav aria-label="Page navigation example">
-  <ul class="pagination">
-  {% if page == 1 %}
+        </div>
+      </a>
+      {% endfor %}
 
-  {% else %}
-    
-    <li class="page-item"><a class="page-link" href="/property/search/all/{{page - 1}}{{filters == null ? null : filters}}">Previous</a></li>
-  {% endif %}
-  {# loop over how many pages there are in result #}
-    {% for i in 1..pages - 5  %}
-    {# check if the current page 'i' == the current page displayed. if so active class added #}
-          {% if i == page %}
-           <li class="page-item active"><a class="page-link" href="/property/search/all/{{i}}{{filters}}">{{i}}</a></li>
+      {% else %}
+      <p class="alert alert-primary text-center" role="alert">No results match your search</p>
+      {% endif %}
+
+      {% if properties|length > 0  %}
+
+      <nav aria-label="Page navigation example" class="d-none d-md-block">
+        <ul class="pagination">
+          {% if page == 1 %}
+
           {% else %}
-           <li class="page-item "><a class="page-link" href="/property/search/all/{{i}}{{filters}}">{{i}}</a></li>
-            
+
+          <li class="page-item"><a class="page-link"
+              href="/property/search/all/{{page - 1}}{{filters == null ? null : filters}}">Previous</a></li>
           {% endif %}
-    {% endfor %}
-    ...
-    {% if page == pages  %}
-         <li class="page-item active"><a class="page-link" href="/property/search/all/{{pages}}{{filters}}">{{pages}}</a></li>
-    {% else %}
+          {# loop over how many pages there are in result #}
+          {% for i in 1..pages - 5  %}
+          {# check if the current page 'i' == the current page displayed. if so active class added #}
+          {% if i == page %}
+          <li class="page-item active"><a class="page-link" href="/property/search/all/{{i}}{{filters}}">{{i}}</a></li>
+          {% else %}
+          <li class="page-item "><a class="page-link" href="/property/search/all/{{i}}{{filters}}">{{i}}</a></li>
+
+          {% endif %}
+          {% endfor %}
+          ...
+          {% if page == pages  %}
+          <li class="page-item active"><a class="page-link"
+              href="/property/search/all/{{pages}}{{filters}}">{{pages}}</a></li>
+          {% else %}
           <li class="page-item"><a class="page-link" href="/property/search/all/{{pages}}{{filters}}">{{pages}}</a></li>
-    {% endif %}
+          {% endif %}
 
 
-      
-    {% if page == pages  %}
 
-    {% else %}
-      
-    <li class="page-item"><a class="page-link" href="/property/search/all/{{page + 1}}{{filters}}">Next</a></li>
-      
-    {% endif %}
+          {% if page == pages  %}
 
-    
-  </ul>
-</nav>
+          {% else %}
 
-{% endif %}
+          <li class="page-item"><a class="page-link" href="/property/search/all/{{page + 1}}{{filters}}">Next</a></li>
 
-</div>
-</div>
+          {% endif %}
+
+
+        </ul>
+      </nav>
+
+      {# mobile pagination #}
+      <div class="mobilePagination d-flex justify-content-around py-3">
+        {% if page == 1 %}
+       <div class="page-item"><a class="page-link" href="#">Previous</a></div> 
+
+        {% else %}
+
+       <div class="page-item active"><a class="page-link" href="/property/search/all/{{page - 1}}{{filters == null ? null : filters}}">Previous</a></div> 
+        {% endif %}
+
+        <div class="page-item active"><a class="page-link" href="">{{page}}</a></div> 
+
+        {% if page == pages  %}
+        <div class="page-item"><a class="page-link" href="#">Next</a></div> 
+
+        {% else %}
+
+        <div class="page-item active"> <a class="page-link" href="/property/search/all/{{page + 1}}{{filters}}">Next</a></div>
+
+        {% endif %}
+      </div>
+      {# mobile pagination end #}
+
+
+      {% endif %}
+
+    </div>
+  </div>
 </div>
 
 

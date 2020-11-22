@@ -46,6 +46,8 @@ $(document).ready(function () {
         }
     })
 
+    // mobile menu
+
     var hamburger = document.querySelector(".hamburger");
     // On click
     hamburger.addEventListener("click", function() {
@@ -58,6 +60,17 @@ $(document).ready(function () {
         
 
     });
+
+    // end mobile menu
+
+    // filters mobile
+
+    $('.filtersMobile__titleTab').on('click', function () {
+        $(this.parentElement).toggleClass('filtersMobile__active');
+    })
+
+
+    // end mobile filters
 
  
 //     $(window).on("load" , function () {
