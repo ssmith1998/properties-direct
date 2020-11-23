@@ -17,7 +17,6 @@
     </head>
     <body>
     {% block header  %}
-    {# <div class="loader"></div> #}
     <header class="pt-3 px-3">
     <div class="row">
     <div class="logoName col-6 col-md-6 pb-2">
@@ -56,20 +55,27 @@
     
     </header>
     <div class="mobileMenu">
-    <div class="mobileMenuContent">
-   <a href="{{path('home')}}">Home</a>
-   <a href="{{path('propertySearchAll')}}">Properties</a>
-   {% if app.user %}
-        <a href="/dashboard"><i class="fas fa-user-circle"></i></a>
-        <a href=""></a>
-        <a href=""></a>  
-   {% else %}
-        <a href="/register">Register</a>
-        <a href="/login">Login</a>
-   {% endif %}
-   
-   <a href="/contact">Contact</a>
-    </div>
+            <div class="mobileMenuContent">
+                <a href="{{path('home')}}">Home</a>
+                <a href="{{path('propertySearchAll')}}">Properties</a>
+                {% if app.user %}
+                        <div class="dropdownMobile">
+                        <a href="#" class="d-flex justify-content-between dropdownMobileButton"><p class="m-0">{{app.user.username}}</p><i class="fas fa-caret-up"></i></a>
+                            <div class="dropdownMobile__content">
+                                <a href="/dashboard"><i class="fas fa-user-circle mr-1"></i>Dashboard</a>
+                                <a href="/password/reset"><i class="fas fa-key mr-1"></i>Reset Password</a>
+                                <a href="/profile/edit"><i class="fas fa-user-circle mr-1"></i>Edit Profile</a>
+                            </div>
+                         </div>
+                         <a href="/logout">Logout</a>
+                        <a href=""></a>  
+                {% else %}
+                        <a href="/register">Register</a>
+                        <a href="/login">Login</a>
+                {% endif %}
+                
+                <a href="/contact">Contact</a>
+            </div>
     </div>
     <div class="overlay"></div>
        {% endblock  %}

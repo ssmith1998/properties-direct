@@ -166,13 +166,7 @@ header {
     height: 400px;
 }
 
-.propertyPhotoSlider {
-    // height: 399px;
 
-    .slick-list {
-        // height: 399px;
-    }
-}
 
 form[name="booking"],
 form[name="registration_form"] {
@@ -338,6 +332,7 @@ button:focus {
         display: block;
         transition: 0.3s;
         font-family: 'Rowdies', cursive;
+        width: 182px;
 
     }
 
@@ -414,6 +409,30 @@ button:focus {
 
 .filtersMobile__active {
     height: 80vh;
+}
+
+
+.dropdownMobile {
+    i.fa-caret-up {
+        transition: 0.1s;
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdownMobile__content {
+        display: none;
+
+
+
+        a {
+            font-size: 20px;
+
+        }
+    }
+}
+
+.rotateChevron {
+    transform: rotate(180deg);
 }
 
 

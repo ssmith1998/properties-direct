@@ -19,6 +19,22 @@ import '../js/slick';
 
 $(document).ready(function () {
 
+    /***************************************
+                mobile dropdown
+    /***************************************/
+
+    $('.dropdownMobileButton').on('click', function () {
+
+        $('.dropdownMobile__content').slideToggle();
+        $('.dropdownMobileButton > .fa-caret-up').toggleClass('rotateChevron');
+
+    })
+
+
+    /***************************************
+                pass confirm 
+    /***************************************/
+
     $('.passwordConfirm').on('keyup', function () {
         var passConfirm = $('.confirmPass').val();
         var pass = $('.pass').val();
@@ -164,14 +180,6 @@ $(document).ready(function () {
 
 
     })
-
-
-
-
-
-
-
-
 
 })
 
