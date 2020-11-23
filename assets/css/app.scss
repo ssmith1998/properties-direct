@@ -147,10 +147,18 @@ header {
 
 .slick-next {
     right: 5px;
+    top: 0px;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .slick-prev {
     left: 5px;
+    top: 0px;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 
@@ -159,10 +167,10 @@ header {
 }
 
 .propertyPhotoSlider {
-    height: 399px;
+    // height: 399px;
 
     .slick-list {
-        height: 399px;
+        // height: 399px;
     }
 }
 

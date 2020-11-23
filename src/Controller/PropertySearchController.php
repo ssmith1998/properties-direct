@@ -40,7 +40,81 @@ class PropertySearchController extends AbstractController
 
 
         $form = $this->createForm(FilterFormType::class);
-        $form2 = $this->createForm(FilterFormType::class);
+        $form2 = $this->createFormBuilder()
+            ->setMethod('GET')
+            ->add('bathsMax', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Select Baths Max',
+                'choices' => [
+                    '5' => 5,
+                    '4' => 4,
+                    '3' => 3,
+                    '2' => 2,
+                    '1' => 1,
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+
+                'data' => $submittedFilters['bathsMax']
+
+            ])
+
+            ->add('bedsMax', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Select Beds Max',
+                'choices' => [
+                    '6' => 6,
+                    '5' => 5,
+                    '4' => 4,
+                    '3' => 3,
+                    '2' => 2,
+                    '1' => 1,
+                ],
+
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+
+                'data' => $submittedFilters['bedsMax']
+            ])
+            ->add('sort', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Sort',
+                'choices' => [
+                    'Lowest - highest' => 'lowest',
+                    'highest - lowest'  => 'highest'
+
+                ],
+
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+
+                'data' => $submittedFilters['sort']
+            ])
+            ->add('priceMax', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Select Price Max',
+                "choices" => [
+                    " Up to £2000" => 2000,
+                    "Up to £5000" => 5000,
+                    "Up to £10000" => 10000,
+                ],
+                'attr' => [
+                    'class' => 'form-control w-100'
+                ],
+
+                'data' => $submittedFilters['priceMax']
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Filter',
+                'attr' => [
+                    'class' => 'btn btn-primary w-100'
+                ]
+            ])
+            ->getForm();
+
 
         $data = null;
 

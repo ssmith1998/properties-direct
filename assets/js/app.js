@@ -41,7 +41,7 @@ $(document).ready(function () {
                 $('#error-msg').css('color', 'red');
 
 
-            
+
             }
         }
     })
@@ -50,14 +50,14 @@ $(document).ready(function () {
 
     var hamburger = document.querySelector(".hamburger");
     // On click
-    hamburger.addEventListener("click", function() {
-      // Toggle class "is-active"
-      hamburger.classList.toggle("is-active");
-      // Do something else, like open/close menu
+    hamburger.addEventListener("click", function () {
+        // Toggle class "is-active"
+        hamburger.classList.toggle("is-active");
+        // Do something else, like open/close menu
         $('.mobileMenu').toggleClass("activeMenu");
         $('.overlay').toggleClass("show");
-       
-        
+
+
 
     });
 
@@ -72,13 +72,13 @@ $(document).ready(function () {
 
     // end mobile filters
 
- 
-//     $(window).on("load" , function () {
-//         $('.loader').fadeOut();
-//     })
-  
+
+    //     $(window).on("load" , function () {
+    //         $('.loader').fadeOut();
+    //     })
+
     // property Photos Slider
-     // Look for .hamburger
+    // Look for .hamburger
 
 
     $('.propertyPhotoSlider').slick({
@@ -89,7 +89,9 @@ $(document).ready(function () {
         slidesToShow: 1,
         prevArrow: '<div class="slick-prev"><i class="fas fa-angle-left"></i></div>',
         nextArrow: '<div class="slick-next"><i class="fas fa-angle-right"></i></div>',
-        arrows: true
+        arrows: true,
+        adaptiveHeight: true
+
     });
 
     $('.mainMenu ul li').on("click", function () {
@@ -164,11 +166,11 @@ $(document).ready(function () {
     })
 
 
-   
-        
 
 
-    
+
+
+
 
 
 })
@@ -179,9 +181,9 @@ $(document).ready(function () {
 //        $(".js-datepicker").datepicker({
 //            clearBtn: true,
 //            autoclose: true
-           
+
 //        });
-       
+
 //        $('.js-datepicker').on('changeDate', function() {
 //         $('.js-hidden').val(
 //             $('.js-datepicker').datepicker('getFormattedDate')
