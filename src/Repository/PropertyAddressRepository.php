@@ -28,6 +28,9 @@ class PropertyAddressRepository extends ServiceEntityRepository
     public function searchProp($propertyAddress, $yearBuilt, $listDate, $bathsMax, $bedsMax, $sort,  $priceMax, $offset)
     {
 
+
+
+
         $ListDate = new \DateTime($listDate->format("d-m-Y") . " 00:00:00");
         $YearBuilt = new \DateTime($yearBuilt->format("d-m-Y") . " 00:00:00");
 

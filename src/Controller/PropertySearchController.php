@@ -29,19 +29,26 @@ class PropertySearchController extends AbstractController
         $propertylistDate = $request->query->get('property')['listDate'];
         $propertyYearBuilt = $request->query->get('property')['yearBuilt'];
         $propertyAddress = $request->query->get('property')['propertyAddress'];
+        $propertySearchQueryString = http_build_query((array)$request->query->get('property'));
 
         $propertylistDateObject = new DateTime($request->query->get('property')['listDate']);
         $propertyYearBuiltObject = new DateTime($request->query->get('property')['yearBuilt']);
-        // dd($propertylistDateObject);
+
 
         $submittedFilters = null;
 
-        $submittedFilters = $request->query->get(('filter_form'));
+        $submittedFilters = $request->query->get(('form'));
+
+
+        $submittedFiltersString = null;
+        if (!empty($submittedFilters)) {
+            $submittedFiltersString = '' . $propertySearchQueryString . '?form%5BbathsMax%5D=' . $submittedFilters["bathsMax"] . '&form%5BbedsMax%5D=' . $submittedFilters["bedsMax"] . '&form%5Bsort%5D=' . $submittedFilters["sort"] . '&form%5BpriceMax%5D=' . $submittedFilters["priceMax"] . '&form%5Bsubmit%5D=&form%5B_token%5D=' . $submittedFilters["_token"] . '';
+        }
 
 
         $form = $this->createForm(FilterFormType::class);
         $form2 = $this->createFormBuilder()
-            ->setMethod('GET')
+            ->setMethod('POST')
             ->add('bathsMax', ChoiceType::class, [
                 'required' => false,
                 'placeholder' => 'Select Baths Max',
@@ -124,6 +131,16 @@ class PropertySearchController extends AbstractController
 
             $data = $form->getData();
         }
+
+
+        $form2->handleRequest($request);
+        if ($form2->isSubmitted() && $form2->isValid()) {
+
+
+            $data = $form2->getData();
+        }
+
+
         $limit = 10;
 
         $offset = ($page - 1) * $limit;
@@ -147,7 +164,9 @@ class PropertySearchController extends AbstractController
             'pages' => $pages,
             'start' => $start,
             'end' => $end,
-            'propertiesCount' => $count
+            'propertiesCount' => $count,
+            'filters' => $submittedFiltersString
+
 
         ]);
     }
