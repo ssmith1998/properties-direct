@@ -5,10 +5,10 @@
 {% block body %}
 
 <div class="wrapperSecurity">
-<h1 class="text-center pb-2">Admin Dashboard</h1>
+<h1 class="text-center pb-2 text-3xl md:text-5xl">Admin Dashboard</h1>
 <div class="row">
 <div class="col-md-6 px-5">
-<div class="card p-3" style="overflow:scroll; height:400px;">
+<div class="card p-3 mb-2 mb-lg-0" style="overflow:scroll; height:400px;">
 <h3>Bookings</h3>
 {% if bookings|length > 0  %}
 {% for booking in bookings %}
@@ -18,9 +18,9 @@
     <p>Booking Time: {{booking.getTimeOfViewing()|date('H:i:s') }}</p>
     <p>Booking Date: {{booking.getDateOfViewing()|date("m/d/Y") }}</p>
     <div class="actionsWrapper">
-    <a href="/property/profile/{{booking.getProperty().getId()}}"><button class="btn btn-outline-primary w-25">View Property</button></a>
-    <a href="/admin/delete/booking/{{booking.id}}"><button class="btn btn-danger w-25">Delete</button></a>
-    <a href="/admin/edit/booking/{{booking.id}}"><button class="btn btn-primary w-25">Update</button></a>
+    <a href="/property/profile/{{booking.getProperty().getId()}}"><button class="btn btn-outline-primary lg:w-23">View Property</button></a>
+    <a href="/admin/delete/booking/{{booking.id}}"><button class="btn btn-danger lg:w-23">Delete</button></a>
+    <a href="/admin/edit/booking/{{booking.id}}"><button class="btn btn-primary lg:w-23">Update</button></a>
     </div>
 </div>
 
@@ -30,7 +30,7 @@
 {% endif %}
 </div>
 </div>
-<div class="col-md-6" >
+<div class="col-md-6 px-4" >
 <div class="card h-100 p-3 mx-4">
 <div class="cardHeader d-flex flex-row align-items-center justify-content-between">
     <h3>Users</h3>

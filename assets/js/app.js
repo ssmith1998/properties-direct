@@ -9,6 +9,7 @@
 import '../css/app.scss';
 import '../css/slick.css';
 import '../css/hamburger.min.css';
+import '../css/tailwind.css';
 
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
@@ -16,7 +17,7 @@ import $ from 'jquery';
 
 import '../js/slick';
 
-
+import * as CustomerSDK from '@livechat/customer-sdk'
 $(document).ready(function () {
 
     /***************************************
@@ -182,6 +183,42 @@ $(document).ready(function () {
     })
 
 })
+
+/***************************************
+              Chat api
+  /***************************************/
+
+let clientSecret = "207bfc7749c358a46e0487134351c10de239147c";
+
+const customerSDK = CustomerSDK.init({
+    licenseId: 12399726,
+    clientId: '9633343ac53f9d8daf017d7988372721',
+    // redirectUri: 'http://127.0.0.1:8000/'
+})
+
+
+
+
+customerSDK.on('new_event', newEvent => {
+    console.log(newEvent);
+})
+
+
+const chatId = 'OU0V0P0OWT'
+customerSDK
+    .sendEvent({
+        chatId,
+        event: {
+            type: 'message',
+            text: 'Hi!',
+        },
+    })
+    .then(response => {
+        console.log(response)
+    })
+    .catch(error => {
+        console.log(error)
+    })
 
 
 
