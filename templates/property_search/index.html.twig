@@ -79,7 +79,7 @@
     {{ form_end(form) }}
   </div>
 
-  <div class="content">
+  <div class="content mb-20 mt-20">
     <div class="container sm:mt-20 lg:mt-0">
 
     {% if pagination.getTotalItemCount > 0 %}
@@ -99,7 +99,7 @@
                 {% endfor %}
 
     {% else %}
-      <p class="alert alert-danger mt-60 text-center text-3xl" role="alert">There are no results that match your search</p>
+      <p class="alert alert-danger mt-60 text-center text-2xl lg:text-3xl" role="alert">There are no results that match your search</p>
     {% endif %}
       
     </div>
