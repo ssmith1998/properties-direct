@@ -86,8 +86,16 @@
         
      {% for property in pagination %}
 
-     <p>{{property[0].getNeighborHoodName()}}</p>
-     <img src="{{property['Link']}}" alt="">
+      <a href="/property/profile/{{property[0].getId()}}">
+        <div class="propertyWrapper [ my-2 ]">
+
+          <p>{{property[0].getNeighborHoodName()}}</p>
+          <p>{{property[0].getLine()}}</p>
+          <img class="w-100 text-center" src="{{ property["Link"] }}" alt="">
+        </div>
+      </a>
+
+
                 {% endfor %}
 
     {% else %}
