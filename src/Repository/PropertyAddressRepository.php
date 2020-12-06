@@ -55,10 +55,11 @@ class PropertyAddressRepository extends ServiceEntityRepository
             ->andWhere('p.yearBuilt <= :yearBuilt')
             ->setParameter('yearBuilt', $YearBuilt)
             ->andWhere('p.listDate <= :listDate')
-            ->setParameter('listDate', $ListDate)
+            ->setParameter('listDate', $ListDate);
 
 
-            ->groupBy('p.id, PropertyPhotos');
+
+        // ->groupBy('p.id, PropertyPhotos');
 
         // ->innerJoin('p.propertyPhotos', 'ph')
 
@@ -94,16 +95,15 @@ class PropertyAddressRepository extends ServiceEntityRepository
 
         // filters end
 
-        $qb->setMaxResults(250)
-            ->setFirstResult($offset);
 
 
 
 
-        $result =  $qb->getQuery()->getResult();
+
+        // $result =  $qb->getQuery()->getResult();
 
         // dd($result);
-        return $result;
+        return $qb;
     }
 
 

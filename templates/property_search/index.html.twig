@@ -81,88 +81,23 @@
 
   <div class="content">
     <div class="container sm:mt-20 lg:mt-0">
-    {% if result|length > 0  %}
-  
-      {% for _property in result  %}
 
-      {% set property = _property[0] %}
-      <a href="/property/profile/{{property.getId()}}">
-        <div class="propertyWrapper [ my-2 ]">
+    {% if pagination.getTotalItemCount > 0 %}
+        
+     {% for property in pagination %}
 
-          <p>{{property.getNeighborHoodName()}}</p>
-          <p>{{property.getLine()}}</p>
-          <img class="w-100 text-center" src="{{ _property["Link"] }}" alt="">
-        </div>
-      </a>
-      {% endfor %}
+     <p>{{property[0].getNeighborHoodName()}}</p>
+     <img src="{{property['Link']}}" alt="">
+                {% endfor %}
 
+    {% else %}
+      <p class="alert alert-danger mt-60 text-center text-3xl" role="alert">There are no results that match your search</p>
+    {% endif %}
       
     </div>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        {% if page == 1 %}
+      <p class="mt-3">{{ knp_pagination_render(pagination) }}</p>
 
-        {% else %}
-
-        <li class="page-item"><a class="page-link" href="/property/{{page - 1}}{{filters == null ? null : filters}}">Previous</a></li>
-        {% endif %}
-        {# loop over how many pages there are in result#}
-        {% for i in 1..pages %}
-        {# check if the current page 'i' == the current page displayed. if so active class added #}
-        {% if i == page %}
-        <li class="page-item active"><a class="page-link" href="/property/{{i}}">{{i}}</a></li>
-        {% else %}
-        <li class="page-item "><a class="page-link" href="/property/{{i}}">{{i}}</a></li>
-
-        {% endif %}
-        {% endfor %}
-
-        {% if pages > 1  %}
-        ...
-        {% if page == pages  %}
-        <li class="page-item active"><a class="page-link" href="/property/{{pages}}">{{pages}}</a></li>
-        {% else %}
-        <li class="page-item"><a class="page-link" href="/property/{{pages}}">{{pages}}</a></li>
-        {% endif %}
-        {% endif %}
-
-
-        {% if page == pages  %}
-
-        {% else %}
-
-        <li class="page-item"><a class="page-link" href="/property/{{page + 1}}?{{propertySearchQueryString}}{{filters == null ? null : filters}}">Next</a></li>
-
-        {% endif %}
-
-
-      </ul>
-    </nav>
-
-     {# mobile pagination #}
-      <div class="mobilePagination  d-lg-none d-flex justify-content-around py-3">
-        {% if page == 1 %}
-       <div class="page-item"><a class="page-link" href="#">Previous</a></div> 
-
-        {% else %}
-
-       <div class="page-item active"><a class="page-link" href="/property/search/all/{{page - 1}}{{filters == null ? null : filters}}">Previous</a></div> 
-        {% endif %}
-
-        <div class="page-item active"><a class="page-link" href="">{{page}}</a></div> 
-
-        {% if page == pages  %}
-        <div class="page-item"><a class="page-link" href="#">Next</a></div> 
-
-        {% else %}
-
-        <div class="page-item active"> <a class="page-link" href="/property/search/all/{{page + 1}}{{filters}}">Next</a></div>
-
-        {% endif %}
-      </div>
-      {# mobile pagination end #}
-
-
+  
 
   </div>
 </div>
