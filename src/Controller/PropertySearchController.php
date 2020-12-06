@@ -39,6 +39,8 @@ class PropertySearchController extends AbstractController
 
         $submittedFilters = $request->query->get(('form'));
 
+        // dd($propertySearchQueryString);
+
 
         $submittedFiltersString = null;
         if (!empty($submittedFilters)) {
@@ -165,7 +167,10 @@ class PropertySearchController extends AbstractController
             'start' => $start,
             'end' => $end,
             'propertiesCount' => $count,
-            'filters' => $submittedFiltersString
+            'filters' => $submittedFiltersString,
+            'addresss' => $propertyAddress,
+            'propertySearchQueryString' => $propertySearchQueryString
+
 
 
         ]);
@@ -367,7 +372,8 @@ class PropertySearchController extends AbstractController
             'start' => $start,
             'end' => $end,
             'propertiesCount' => $propertiesCount,
-            'filters' => $submittedFiltersString
+            'filters' => $submittedFiltersString,
+
 
 
         ]);

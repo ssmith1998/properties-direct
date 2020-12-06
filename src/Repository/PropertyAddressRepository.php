@@ -94,13 +94,8 @@ class PropertyAddressRepository extends ServiceEntityRepository
 
         // filters end
 
-        $qb
+        $qb->setMaxResults(250)
             ->setFirstResult($offset);
-
-
-
-
-
 
 
 
