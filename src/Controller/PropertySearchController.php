@@ -67,7 +67,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['bathsMax']
+                'data' => $submittedFilters['bathsMax'] === null ?: $submittedFilters
 
             ])
 
