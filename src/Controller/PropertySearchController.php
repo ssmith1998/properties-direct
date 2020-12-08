@@ -35,11 +35,11 @@ class PropertySearchController extends AbstractController
         $propertyYearBuiltObject = new DateTime($request->query->get('property')['yearBuilt']);
 
 
-        // $submittedFilters = null;
+        $submittedFilters = null;
 
-        if ($request->query->has(('form'))) {
-            $submittedFilters = $request->query->get(('form'));
-        }
+
+        $submittedFilters = $request->query->get(('form'));
+
 
         // dd($propertySearchQueryString);
 
@@ -67,7 +67,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['bathsMax']
+                // 'data' => $submittedFilters['bathsMax']
 
             ])
 
@@ -87,7 +87,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['bedsMax']
+                // 'data' => $submittedFilters['bedsMax']
             ])
             ->add('sort', ChoiceType::class, [
                 'required' => false,
@@ -102,7 +102,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['sort']
+                // 'data' => $submittedFilters['sort']
             ])
             ->add('priceMax', ChoiceType::class, [
                 'required' => false,
@@ -116,7 +116,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control w-100'
                 ],
 
-                'data' => $submittedFilters['priceMax']
+                // 'data' => $submittedFilters['priceMax']
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Filter',
