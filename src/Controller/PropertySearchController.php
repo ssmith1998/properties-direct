@@ -222,7 +222,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['bathsMax']
+                'data' => isset($submittedFilters['bathsMax']) ? $submittedFilters['bathsMax'] : null
 
             ])
 
@@ -242,7 +242,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['bedsMax']
+                'data' => isset($submittedFilters['bedsMax']) ? $submittedFilters['bedsMax'] : null
             ])
             ->add('sort', ChoiceType::class, [
                 'required' => false,
@@ -257,7 +257,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['sort']
+                'data' => isset($submittedFilters['sort']) ? $submittedFilters['sort'] : null
             ])
             ->add('priceMax', ChoiceType::class, [
                 'required' => false,
@@ -271,7 +271,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control w-100'
                 ],
 
-                'data' => $submittedFilters['priceMax']
+                'data' => isset($submittedFilters['priceMax']) ? $submittedFilters['priceMax'] : null
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Filter',
@@ -362,8 +362,8 @@ class PropertySearchController extends AbstractController
 
         $offset = ($page - 1)  * $limit;
 
-        $properties = $propertyRepository->findAllProperties($submittedFilters['bathsMax'], $submittedFilters['bedsMax'], $submittedFilters['sort'], $submittedFilters['priceMax'], $offset);
-        $propertiesCount = $propertyRepository->countAllProperties($submittedFilters['bathsMax'], $submittedFilters['bedsMax'], $submittedFilters['sort'], $submittedFilters['priceMax']);
+        $properties = $propertyRepository->findAllProperties(isset($submittedFilters['bathsMax']) ? $submittedFilters['bathsMax'] : null, isset($submittedFilters['bedsMax']) ? $submittedFilters['bedsMax'] : null, isset($submittedFilters['sort']) ? $submittedFilters['sort'] : null, isset($submittedFilters['priceMax']) ? $submittedFilters['priceMax'] : null, $offset);
+        $propertiesCount = $propertyRepository->countAllProperties(isset($submittedFilters['bathsMax']) ? $submittedFilters['bathsMax'] : null, isset($submittedFilters['bedsMax']) ? $submittedFilters['bedsMax'] : null, isset($submittedFilters['sort']) ? $submittedFilters['sort'] : null, isset($submittedFilters['priceMax']) ? $submittedFilters['priceMax'] : null);
 
 
         $pages = ceil($propertiesCount / $limit);
