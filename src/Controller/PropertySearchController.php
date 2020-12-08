@@ -297,7 +297,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['bathsMax']
+                'data' => isset($submittedFilters['bathsMax']) ? $submittedFilters['bathsMax'] : null
 
             ])
 
@@ -317,7 +317,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['bedsMax']
+                'data' => isset($submittedFilters['bedsMax']) ? $submittedFilters['bedsMax'] : null
             ])
             ->add('sort', ChoiceType::class, [
                 'required' => false,
@@ -332,7 +332,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['sort']
+                'data' => isset($submittedFilters['sort']) ? $submittedFilters['sort'] : null
             ])
             ->add('priceMax', ChoiceType::class, [
                 'required' => false,
@@ -346,7 +346,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control w-100'
                 ],
 
-                'data' => $submittedFilters['priceMax']
+                'data' => isset($submittedFilters['priceMax']) ? $submittedFilters['priceMax'] : null
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Filter',
