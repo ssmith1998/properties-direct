@@ -35,7 +35,7 @@ class PropertySearchController extends AbstractController
         $propertyYearBuiltObject = new DateTime($request->query->get('property')['yearBuilt']);
 
 
-        $submittedFilters = null;
+        // $submittedFilters = null;
 
         if ($request->query->has(('form'))) {
             $submittedFilters = $request->query->get(('form'));
@@ -67,7 +67,7 @@ class PropertySearchController extends AbstractController
                     'class' => 'form-control'
                 ],
 
-                'data' => $submittedFilters['bathsMax'] === null ? dd('hello') : $submittedFilters['bathsMax']
+                'data' => $submittedFilters['bathsMax']
 
             ])
 
