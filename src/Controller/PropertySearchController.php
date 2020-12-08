@@ -26,13 +26,10 @@ class PropertySearchController extends AbstractController
      */
     public function index(Request $request, PropertyAddressRepository $repo, $page = 1, PaginatorInterface $paginator)
     {
-        $propertylistDate = $request->query->get('property')['listDate'];
-        $propertyYearBuilt = $request->query->get('property')['yearBuilt'];
+        $bathsMaxSearch = $request->query->get('property')['bathsMax'];
+        $bedsMaxSearch = $request->query->get('property')['bedsMax'];
         $propertyAddress = $request->query->get('property')['propertyAddress'];
         $propertySearchQueryString = http_build_query((array)$request->query->get('property'));
-
-        $propertylistDateObject = new DateTime($request->query->get('property')['listDate']);
-        $propertyYearBuiltObject = new DateTime($request->query->get('property')['yearBuilt']);
 
 
         $submittedFilters = null;
@@ -147,8 +144,8 @@ class PropertySearchController extends AbstractController
 
         $offset = ($page - 1) * $limit;
 
-        $result = $repo->searchProp($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, $data['bathsMax'], $data['bedsMax'], $data['sort'], $data['priceMax'], $offset);
-        $count = $repo->searchPropCount($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, $data['bathsMax'], $data['bedsMax'], $data['sort'], $data['priceMax']);
+        $result = $repo->searchProp($propertyAddress, $bathsMaxSearch, $bedsMaxSearch, $data['bathsMax'], $data['bedsMax'], $data['sort'], $data['priceMax'], $offset);
+        $count = $repo->searchPropCount($propertyAddress, $bathsMaxSearch, $bedsMaxSearch, $data['bathsMax'], $data['bedsMax'], $data['sort'], $data['priceMax']);
 
 
         $pages = ceil($count / $limit);
@@ -159,7 +156,8 @@ class PropertySearchController extends AbstractController
         $pagination = $paginator->paginate(
             $result, /* query NOT result */
             $page/*page number*/,
-            10/*limit per page*/
+            10/*limit per page*/,
+            array('wrap-queries'=>true)
 
         );
 

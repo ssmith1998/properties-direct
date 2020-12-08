@@ -23,20 +23,11 @@ class PropertyAddressRepository extends ServiceEntityRepository
     }
 
 
-
-
-    public function searchProp($propertyAddress, $yearBuilt, $listDate, $bathsMax, $bedsMax, $sort,  $priceMax, $offset)
+    public function searchProp($propertyAddress, $bathsMaxSearch, $bedsMaxSearch, $bathsMax, $bedsMax, $sort, $priceMax, $offset)
     {
 
 
-
-
-        $ListDate = new \DateTime($listDate->format("d-m-Y") . " 00:00:00");
-        $YearBuilt = new \DateTime($yearBuilt->format("d-m-Y") . " 00:00:00");
-
-
-
-
+//        dd($bathsMaxSearch);
         $qb = $this->createQueryBuilder('pa')
             ->select('p, pa, PropertyPhotos')
             ->addSelect('p.propertyType AS PropertyType')
@@ -45,18 +36,21 @@ class PropertyAddressRepository extends ServiceEntityRepository
             ->innerJoin('pa.property', 'p')
             ->leftJoin('p.propertyCommunity', 'pc')
             ->leftJoin('p.propertyPhotos', 'PropertyPhotos')
-
-
-
             ->where("pa.neighborHoodName = :propertyAddress")
-            ->setParameter('propertyAddress', $propertyAddress)
+            ->setParameter('propertyAddress', $propertyAddress);
 
+        if ($bathsMaxSearch ==! "") {
+            $qb
+                ->andWhere('pc.bathsMax <= :bathsMax')
+                ->setParameter('bathsMax', (int)$bathsMaxSearch);
 
-            ->andWhere('p.yearBuilt <= :yearBuilt')
-            ->setParameter('yearBuilt', $YearBuilt)
-            ->andWhere('p.listDate <= :listDate')
-            ->setParameter('listDate', $ListDate);
+        }
 
+        if ($bedsMaxSearch ==! "") {
+            $qb
+                ->andWhere('pc.bedsMax <= :bedsMax')
+                ->setParameter('bedsMax', (int)$bedsMaxSearch);
+        }
 
 
         // ->groupBy('p.id, PropertyPhotos');
@@ -73,7 +67,6 @@ class PropertyAddressRepository extends ServiceEntityRepository
         }
 
 
-
         if (!empty($bedsMax)) {
 
             $qb->andWhere('pc.bedsMax <= :bedsMax')
@@ -96,8 +89,7 @@ class PropertyAddressRepository extends ServiceEntityRepository
         // filters end
 
 
-
-
+//        dd($qb->getQuery()->getResult());
 
 
         // $result =  $qb->getQuery()->getResult();
@@ -107,13 +99,8 @@ class PropertyAddressRepository extends ServiceEntityRepository
     }
 
 
-    public function searchPropCount($propertyAddress, $yearBuilt, $listDate, $bathsMax, $bedsMax, $sort,  $priceMax)
+    public function searchPropCount($propertyAddress, $bathsMaxSearch, $bedsMaxSearch, $bathsMax, $bedsMax, $sort, $priceMax)
     {
-
-        $ListDate = new \DateTime($listDate->format("d-m-Y") . " 00:00:00");
-        $YearBuilt = new \DateTime($yearBuilt->format("d-m-Y") . " 00:00:00");
-
-
 
 
         $qb = $this->createQueryBuilder('pa')
@@ -124,19 +111,21 @@ class PropertyAddressRepository extends ServiceEntityRepository
             ->innerJoin('pa.property', 'p')
             ->leftJoin('p.propertyCommunity', 'pc')
             ->leftJoin('p.propertyPhotos', 'PropertyPhotos')
-
-
-
             ->where("pa.neighborHoodName = :propertyAddress")
-            ->setParameter('propertyAddress', $propertyAddress)
+            ->setParameter('propertyAddress', $propertyAddress);
+             if ($bathsMaxSearch ==! "") {
+                 $qb
+                     ->andWhere('pc.bathsMax <= :bathsMax')
+                     ->setParameter('bathsMax', (int)$bathsMaxSearch);
 
+             }
 
-            ->andWhere('p.yearBuilt <= :yearBuilt')
-            ->setParameter('yearBuilt', $YearBuilt)
-            ->andWhere('p.listDate <= :listDate')
-            ->setParameter('listDate', $ListDate)
-
-
+        if ($bedsMaxSearch ==! "") {
+            $qb
+                ->andWhere('pc.bedsMax <= :bedsMax')
+                ->setParameter('bedsMax', (int)$bedsMaxSearch);
+        }
+        $qb
             ->groupBy('p.id, PropertyPhotos');
 
         // ->innerJoin('p.propertyPhotos', 'ph')
@@ -151,7 +140,6 @@ class PropertyAddressRepository extends ServiceEntityRepository
         }
 
 
-
         if (!empty($bedsMax)) {
 
             $qb->andWhere('pc.bedsMax <= :bedsMax')
@@ -174,15 +162,7 @@ class PropertyAddressRepository extends ServiceEntityRepository
         // filters end
 
 
-
-
-
-
-
-
-
-
-        $result =  count($qb->getQuery()->getResult());
+        $result = count($qb->getQuery()->getResult());
 
         // dd($result);
         return $result;
