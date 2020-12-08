@@ -37,7 +37,9 @@ class PropertySearchController extends AbstractController
 
         $submittedFilters = null;
 
-        $submittedFilters = $request->query->get(('form'));
+        if ($request->query->has(('form'))) {
+            $submittedFilters = $request->query->get(('form'));
+        }
 
         // dd($propertySearchQueryString);
 
