@@ -74,7 +74,7 @@
   </div>
 
   <div class="content">
-    <div class="container mb-5">
+    <div class="container mb-5 mt-24">
       {% if properties|length > 0 %}
 
       {% for property in properties  %}
@@ -110,7 +110,7 @@
               href="/property/search/all/{{page - 1}}{{filters == null ? null : filters}}">Previous</a></li>
           {% endif %}
           {# loop over how many pages there are in result #}
-          {% for i in 1..pages - 5  %}
+          {% for i in 1..pages  %}
           {# check if the current page 'i' == the current page displayed. if so active class added #}
           {% if i == page %}
           <li class="page-item active"><a class="page-link" href="/property/search/all/{{i}}{{filters}}">{{i}}</a></li>
@@ -119,13 +119,18 @@
 
           {% endif %}
           {% endfor %}
+           {% if pages > 4 %}
           ...
           {% if page == pages  %}
+        
+            
+    
           <li class="page-item active"><a class="page-link"
               href="/property/search/all/{{pages}}{{filters}}">{{pages}}</a></li>
           {% else %}
           <li class="page-item"><a class="page-link" href="/property/search/all/{{pages}}{{filters}}">{{pages}}</a></li>
-          {% endif %}
+                {% endif %}
+                  {% endif %}
 
 
 

@@ -24,7 +24,7 @@ class PropertySearchController extends AbstractController
     /**
      * @Route("/property/{page}", name="propertySearch")
      */
-    public function index(Request $request, PropertyAddressRepository $repo, $page = 1)
+    public function index(Request $request, PropertyAddressRepository $repo, $page = 1, PaginatorInterface $paginator)
     {
         $propertylistDate = $request->query->get('property')['listDate'];
         $propertyYearBuilt = $request->query->get('property')['yearBuilt'];
@@ -38,6 +38,8 @@ class PropertySearchController extends AbstractController
         $submittedFilters = null;
 
         $submittedFilters = $request->query->get(('form'));
+
+        // dd($propertySearchQueryString);
 
 
         $submittedFiltersString = null;
@@ -154,6 +156,13 @@ class PropertySearchController extends AbstractController
         $start = $offset + 1;
         $end = min(($offset + $limit), $count);
 
+        $pagination = $paginator->paginate(
+            $result, /* query NOT result */
+            $page/*page number*/,
+            10/*limit per page*/
+
+        );
+
 
         return $this->render('property_search/index.html.twig', [
             'controller_name' => 'PropertySearchController',
@@ -165,7 +174,11 @@ class PropertySearchController extends AbstractController
             'start' => $start,
             'end' => $end,
             'propertiesCount' => $count,
-            'filters' => $submittedFiltersString
+            'filters' => $submittedFiltersString,
+            'addresss' => $propertyAddress,
+            'propertySearchQueryString' => $propertySearchQueryString,
+            'pagination' => $pagination
+
 
 
         ]);
@@ -367,7 +380,8 @@ class PropertySearchController extends AbstractController
             'start' => $start,
             'end' => $end,
             'propertiesCount' => $propertiesCount,
-            'filters' => $submittedFiltersString
+            'filters' => $submittedFiltersString,
+
 
 
         ]);
