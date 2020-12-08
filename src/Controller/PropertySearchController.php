@@ -149,8 +149,8 @@ class PropertySearchController extends AbstractController
 
         $offset = ($page - 1) * $limit;
 
-        $result = $repo->searchProp($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, $data['bathsMax'], $data['bedsMax'], $data['sort'], $data['priceMax'], $offset);
-        $count = $repo->searchPropCount($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, $data['bathsMax'], $data['bedsMax'], $data['sort'], $data['priceMax']);
+        $result = $repo->searchProp($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, isset($data['bathsMax']) ? $data['bathsMax'] : null, isset($data['bedsMax']) ? $data['bedsMax'] : null, isset($data['sort']) ? $data['sort'] : null, isset($data['priceMax']) ? $data['priceMax'] : null, $offset);
+        $count = $repo->searchPropCount($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, isset($data['bathsMax']) ? $data['bathsMax'] : null, isset($data['bedsMax']) ? $data['bedsMax'] : null, isset($data['sort']) ? $data['sort'] : null, isset($data['priceMax']) ? $data['priceMax'] : null);
 
 
         $pages = ceil($count / $limit);
