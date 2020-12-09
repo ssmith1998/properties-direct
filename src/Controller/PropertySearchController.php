@@ -26,13 +26,10 @@ class PropertySearchController extends AbstractController
      */
     public function index(Request $request, PropertyAddressRepository $repo, $page = 1, PaginatorInterface $paginator)
     {
-        $propertylistDate = $request->query->get('property')['listDate'];
-        $propertyYearBuilt = $request->query->get('property')['yearBuilt'];
+        $bathsMaxSearch = $request->query->get('property')['bathsMax'];
+        $bedsMaxSearch = $request->query->get('property')['bedsMax'];
         $propertyAddress = $request->query->get('property')['propertyAddress'];
         $propertySearchQueryString = http_build_query((array)$request->query->get('property'));
-
-        $propertylistDateObject = new DateTime($request->query->get('property')['listDate']);
-        $propertyYearBuiltObject = new DateTime($request->query->get('property')['yearBuilt']);
 
 
         $submittedFilters = null;
@@ -149,8 +146,8 @@ class PropertySearchController extends AbstractController
 
         $offset = ($page - 1) * $limit;
 
-        $result = $repo->searchProp($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, isset($data['bathsMax']) ? $data['bathsMax'] : null, isset($data['bedsMax']) ? $data['bedsMax'] : null, isset($data['sort']) ? $data['sort'] : null, isset($data['priceMax']) ? $data['priceMax'] : null, $offset);
-        $count = $repo->searchPropCount($propertyAddress, $propertyYearBuiltObject, $propertylistDateObject, isset($data['bathsMax']) ? $data['bathsMax'] : null, isset($data['bedsMax']) ? $data['bedsMax'] : null, isset($data['sort']) ? $data['sort'] : null, isset($data['priceMax']) ? $data['priceMax'] : null);
+        $result = $repo->searchProp($propertyAddress, $bathsMaxSearch, $bedsMaxSearch, isset($data['bathsMax']) ? $data['bathsMax'] : null, isset($data['bedsMax']) ? $data['bedsMax'] : null, isset($data['sort']) ? $data['sort'] : null, isset($data['priceMax']) ? $data['priceMax'] : null, $offset);
+        $count = $repo->searchPropCount($propertyAddress, $bathsMaxSearch, $bedsMaxSearch, isset($data['bathsMax']) ? $data['bathsMax'] : null, isset($data['bedsMax']) ? $data['bedsMax'] : null, isset($data['sort']) ? $data['sort'] : null, isset($data['priceMax']) ? $data['priceMax'] : null);
 
 
         $pages = ceil($count / $limit);
@@ -161,7 +158,8 @@ class PropertySearchController extends AbstractController
         $pagination = $paginator->paginate(
             $result, /* query NOT result */
             $page/*page number*/,
-            10/*limit per page*/
+            10/*limit per page*/,
+            array('wrap-queries' => true)
 
         );
 

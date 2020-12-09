@@ -9,6 +9,7 @@ use App\Repository\PropertyRepository;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,30 +22,12 @@ class PropertyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('listDate', DateType::class, [
-                'label' => 'List Date',
-                'widget' => 'single_text',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('yearBuilt', DateType::class, [
-                'label' => 'Year Built',
-                'widget' => 'single_text',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-
-            ])
             ->add('propertyAddress', EntityType::class, [
                 'class' => PropertyAddress::class,
                 'query_builder' => function (PropertyAddressRepository $er) {
                     return $er->createQueryBuilder('pa')
                         ->innerJoin('pa.property', 'p')
                         ->select('DISTINCT pa ')
-
                         ->where('pa.neighborHoodName IS NOT NULL')
                         ->andWhere('p.listDate IS NOT NULL')
                         ->andWhere('p.yearBuilt IS NOT NULL')
@@ -61,7 +44,40 @@ class PropertyType extends AbstractType
                 },
 
             ])
+            ->add('bedsMax', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Select Beds Max',
+                'choices' => [
+                    '6' => 6,
+                    '5' => 5,
+                    '4' => 4,
+                    '3' => 3,
+                    '2' => 2,
+                    '1' => 1,
+                ],
 
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'mapped' => false
+
+            ])
+            ->add('bathsMax', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Select Baths Max',
+                'choices' => [
+                    '5' => 5,
+                    '4' => 4,
+                    '3' => 3,
+                    '2' => 2,
+                    '1' => 1,
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'mapped' => false
+
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Search',
                 'attr' => [
