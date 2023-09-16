@@ -9,16 +9,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use \Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class ContactController extends AbstractController
 {
     /**
      * @Route("/contact", name="contact")
      */
-    public function index(\Swift_Mailer $mailer, Request $request)
+    public function index(MailerInterface $mailer, Request $request)
     {
-
-
 
         $form = $this->createFormBuilder()
             ->add('fullName', TextType::class, [
@@ -51,10 +51,11 @@ class ContactController extends AbstractController
             $data = $form->getData();
 
             // send email
-            $message = (new \Swift_Message('Contact Form Enquiry'))
-                ->setFrom($data['email'])
-                ->setTo('smith.sean1998@gmail.com')
-                ->setBody(
+            $message = (new Email())
+                ->subject('Contact Form Enquiry')
+                ->from($data['email'])
+                ->to('smith.sean1998@gmail.com')
+                ->html(
                     $this->renderView(
                         'emails/contact.html.twig',
                         [

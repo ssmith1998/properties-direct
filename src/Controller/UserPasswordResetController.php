@@ -14,7 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserPasswordResetController extends AbstractController
 {
@@ -27,7 +29,7 @@ class UserPasswordResetController extends AbstractController
 
     private $em;
 
-    public function __construct(UserRepository $userRepository, \Swift_Mailer $mailer, UserPasswordEncoderInterface $encoder, EntityManagerInterface $em)
+    public function __construct(UserRepository $userRepository, MailerInterface $mailer, UserPasswordHasherInterface $encoder, EntityManagerInterface $em)
     {
         $this->userRepo = $userRepository;
         $this->mailer = $mailer;
@@ -100,10 +102,11 @@ class UserPasswordResetController extends AbstractController
                 setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
 
 
-                $message = (new \Swift_Message('Password Reset'))
-                    ->setFrom('smith.sean1998@gmail.com')
-                    ->setTo($formData['email'])
-                    ->setBody(
+                $message = (new Email())
+                    ->subject('Password Reset')
+                    ->from('smith.sean1998@gmail.com')
+                    ->to($formData['email'])
+                    ->html(
                         $this->renderView(
                             'emails/password-reset.html.twig',
                             [
@@ -210,7 +213,7 @@ class UserPasswordResetController extends AbstractController
 
                 $formData = $form->getData();
 
-                $newPass = $this->encoder->encodePassword($user, $formData['password']);
+                $newPass = $this->encoder->hashPassword($user, $formData['password']);
 
 
                 $user->setPassword($newPass);

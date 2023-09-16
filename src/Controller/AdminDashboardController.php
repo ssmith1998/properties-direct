@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use ProxyManager\ProxyGenerator\ValueHolder\MethodGenerator\Constructor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -28,7 +29,7 @@ class AdminDashboardController extends AbstractController
     private $encoder;
 
 
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder)
     {
         $this->em = $entityManager;
         $this->encoder = $encoder;
@@ -191,7 +192,7 @@ class AdminDashboardController extends AbstractController
             $pass = $adminUserData->getPassword();
             $username = $adminUserData->getUsername();
 
-            $encoded = $this->encoder->encodePassword($adminUser, $pass);
+            $encoded = $this->encoder->hashPassword($adminUser, $pass);
 
             $adminUser->setPassword($encoded);
             $adminUser->setUsername($username);

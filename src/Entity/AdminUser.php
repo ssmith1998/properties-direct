@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use App\Repository\AdminUserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=AdminUserRepository::class)
  */
-class AdminUser implements UserInterface
+class AdminUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id()
@@ -54,6 +55,11 @@ class AdminUser implements UserInterface
         $this->username = $username;
 
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
     }
 
     /**
